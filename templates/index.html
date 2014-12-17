@@ -103,22 +103,21 @@
 </head>
 <body>
     <div data-role="header" data-position="fixed">
-        <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
-            <a class="ui-btn" href="/about">About</a>
+        <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left"  data-content-theme="b" data-theme="b">
             <a class="ui-btn" href="{{ url_for('allorgs') }}" class="item">All</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='sugarlabs') }}" class="item">Sugar Labs</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='sahana') }}" class="item">Sahana Eden</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='apertium') }}" class="item">Apertium</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='brlcad') }}" class="item">BRL-CAD</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='copyleftgames') }}" class="item">Copyleft Games</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='openmrs') }}" class="item">OpenMRS</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='wikimedia') }}" class="item">Wikimedia</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='kde') }}" class="item">KDE</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='haiku') }}" class="item">Haiku</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='drupal') }}" class="item">Drupal</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='mifos') }}" class="item">Mifos</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='fossasia') }}" class="item">FOSS Asia</a>
-
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='haiku') }}" class="item">Haiku</a>
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='kde') }}" class="item">KDE</a>
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='mifos') }}" class="item">Mifos</a>
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='openmrs') }}" class="item">OpenMRS</a>
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='sahana') }}" class="item">Sahana Eden</a>
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='sugarlabs') }}" class="item">Sugar Labs</a>
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='wikimedia') }}" class="item">Wikimedia</a>
+            <a class="ui-btn" href="https://github.com/ignaciouy/GCILeaderboard " class="item">About</a>
         </div>
     </div>
     <div id='content'>
