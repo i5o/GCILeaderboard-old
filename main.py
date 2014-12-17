@@ -1,13 +1,6 @@
-import requests
 import sys
 from flask import *
 app = Flask(__name__)
-import os
-
-try:
-    os.mkdir("orgs")
-except:
-    pass
 
 BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
     "{orgname}?fmt=json&limit=500&idx=1"

@@ -1,5 +1,12 @@
 import requests
 import json
+import os
+
+try:
+    os.mkdir("orgs")
+except:
+    pass
+
 
 orglist = ['sugarlabs',
            'mifos',
