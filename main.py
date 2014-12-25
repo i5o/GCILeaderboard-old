@@ -73,9 +73,16 @@ def student(name, e=0, org=None):
                     research += 1
 
     tasks.sort()
-    return render_template("student.html", tasks=tasks,
-                           total=total,
-                           name=name)
+    return render_template(
+        "student.html",
+        tasks=tasks,
+        total=total,
+        code=code,
+        interface=interface,
+        quality=quality,
+        documentation=doc,
+        research=research,
+        name=name)
 
 
 @app.route('/org/<org>/')
