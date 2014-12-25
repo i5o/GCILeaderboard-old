@@ -1,6 +1,9 @@
 import sys
+from HTMLParser import HTMLParser
 from flask import *
 app = Flask(__name__)
+
+parser = HTMLParser()
 
 BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
     "{orgname}?fmt=json&limit=500&idx=1"
@@ -49,37 +52,27 @@ def student(name, e=0, org=None):
             if student_name == name:
                 total += 1
                 student_name = row['columns']['student']
-                title = row['columns']['title']
+                title = parser.unescape(row['columns']['title']).capitalize()
                 link = "http://www.google-melange.com" + \
                     row['operations']['row']['link']
                 type_ = row['columns']['types']
-                tasks.append((title, link, type_, org))
+                task = (title, link, type_, org)
+                if task in tasks:
+                    continue
+                tasks.append(task)
 
-                if type_ == "User Interface" or type_.startswith(
-                        "User Interface"):
+                if "User Interface" in type_:
                     interface += 1
-                elif type_ == "Code" or type_.startswith("Code"):
+                elif "Code" in type_:
                     code += 1
-                elif type_ == "Quality Assurance" or type_.startswith("Quality Assurance"):
+                elif "Quality" in type_:
                     quality += 1
                 elif "Documentation" in type_:
                     doc += 1
                 elif "Research" in type_:
                     research += 1
 
-            tasks.sort()
-            if total == e and e:
-                return render_template("student.html",
-                                       tasks=tasks,
-                                       total=total,
-                                       interface=interface,
-                                       code=code,
-                                       documentation=doc,
-                                       quality=quality,
-                                       research=research,
-                                       name=name)
-
-    #tasks.sort(key=lambda x: (x[0], x[2], x[3], x[0]))
+    tasks.sort()
     return render_template("student.html", tasks=tasks,
                            total=total,
                            name=name)
