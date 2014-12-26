@@ -37,26 +37,26 @@ def student(name, e=0, org=None):
     research = 0
     total = 0
 
-    ol = orglist
-    if org and u'All' not in org:
-        ol = [org] + ol
+    isAll = False
+    if u'All' in org:
+        isAll = True
 
-    for org in ol:
-        page_json_f = open("orgs/%s.json" % org, "r")
+    for orgname in orglist:
+        page_json_f = open("orgs/%s.json" % orgname, "r")
         page_json = json.loads(page_json_f.read())
         page_json_f.close()
 
         data = page_json['data']['']
         for row in data:
             student_name = row['columns']['student']
-            if student_name == name:
+            if student_name == name and (isAll or orgname == org):
                 total += 1
                 student_name = row['columns']['student']
                 title = parser.unescape(row['columns']['title']).capitalize()
                 link = "http://www.google-melange.com" + \
                     row['operations']['row']['link']
                 type_ = row['columns']['types']
-                task = (title, link, type_, org)
+                task = (title, link, type_, orgname)
                 if task in tasks:
                     continue
                 tasks.append(task)
@@ -82,7 +82,8 @@ def student(name, e=0, org=None):
         quality=quality,
         documentation=doc,
         research=research,
-        name=name)
+        name=name,
+        orgname=org)
 
 
 @app.route('/org/<org>/')

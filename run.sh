@@ -5,4 +5,5 @@ python main.py 5000 &
 while true; do
 	sleep 5m
 	python update.py
+        git pull
 done
