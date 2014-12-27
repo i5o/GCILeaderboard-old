@@ -8,125 +8,43 @@
     {% endblock %}
     </title>
 
-    <link href='http://fonts.googleapis.com/css?family=Exo+2:200' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.4.1/canvas.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <style>
-    * {
-        font-family: 'Exo 2';
-        min-height: 0px;
-        min-width: 0px;
-    }
-    #content {
-        margin: 5% 10%;
-    }
-
-    .ui.red.segment {
-      border-top: 0.2em solid #D95C5C;
-    }
-
-    .ui.segment.attached {
-      top: -1px;
-      bottom: -1px;
-      border-radius: 0px;
-      margin: 0em;
-      -webkit-box-shadow: 0px 0px 0px 1px #DDDDDD;
-      box-shadow: 0px 0px 0px 1px #DDDDDD;
-    }
-
-    .ui.segment {
-      position: relative;
-      background-color: #FFFFFF;
-      -webkit-box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
-      box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
-      margin: 1em 0em;
-      padding: 1em;
-      border-radius: 5px 5px 5px 5px;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -ms-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-
-
-    .ui.segment:first-child {
-      margin-top: 0em;
-    }
-
-    .ui.segment:last-child {
-      margin-bottom: 0em;
-    }
-
-    .ui.segment:after {
-      content: '';
-      display: block;
-      height: 0;
-      clear: both;
-      visibility: hidden;
-    }
-
-    .ui.ribbon.label {
-      position: relative;
-      margin: 0em 0.2em;
-      left: -2rem;
-      padding-left: 2rem;
-      border-radius: 0px 4px 4px 0px;
-      border-color: rgba(0, 0, 0, 0.15);
-    }
-
-    .ui.ribbon.label:after {
-      position: absolute;
-      content: "";
-      top: 100%;
-      left: 0%;
-      border-top: 0em solid transparent;
-      border-right-width: 1em;
-      border-right-color: inherit;
-      border-right-style: solid;
-      border-bottom: 1em solid transparent;
-      border-left: 0em solid transparent;
-      width: 0em;
-      height: 0em;
-    }
-    .ui.red.ribbon.label {
-      border-color: #DE3859 !important;
-    }
-
-    .ui.inverted.labels .label,
-    .ui.inverted.label {
-      color: #FFFFFF !important;
-    }
+    #content{margin:5% 10%;}
     </style>
+
 </head>
 <body>
-    <div data-role="header" data-position="fixed">
-        <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left"  data-content-theme="b" data-theme="b">
-            <a class="ui-btn" href="{{ url_for('allorgs') }}" class="item">All</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='apertium') }}" class="item">Apertium</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='brlcad') }}" class="item">BRL-CAD</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='copyleftgames') }}" class="item">Copyleft Games</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='drupal') }}" class="item">Drupal</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='fossasia') }}" class="item">FOSS Asia</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='haiku') }}" class="item">Haiku</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='kde') }}" class="item">KDE</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='mifos') }}" class="item">Mifos</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='openmrs') }}" class="item">OpenMRS</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='sahana') }}" class="item">Sahana Eden</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='sugarlabs') }}" class="item">Sugar Labs</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='wikimedia') }}" class="item">Wikimedia</a>
-            <a class="ui-btn" href="https://github.com/ignaciouy/GCILeaderboard " class="item">About</a>
-        </div>
-    </div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <a class="navbar-brand" href="https://github.com/ignaciouy/GCILeaderboard">GCI Leadearboard (Unofficial)</a>
+        <ul class="nav navbar-nav">
+            <li role="presentation"><a href="{{ url_for('allorgs') }}">All</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='apertium') }}">Apertium</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='brlcad') }}">BRL-CAD</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='copyleftgames') }}">Copyleft Games</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='drupal') }}">Drupal</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='fossasia') }}">FOSS Asia</a>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='haiku') }}">Haiku</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='kde') }}">KDE</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='mifos') }}">Mifos</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='openmrs') }}">OpenMRS</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='sahana') }}">Sahana Eden</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='sugarlabs') }}">Sugar Labs</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='wikimedia') }}">Wikimedia</a></li>
+    </ul>
+    </nav>
+</div>
     <div id='content'>
     {% block content %}
         <h1>Hi!</h1>
         This website is a per organization leaderboard for Google Code In 2014. Click on your organization above.
         <br>
-        Enjoy! <i class="smile icon"></i>
+        Enjoy!
     {% endblock %}
     </div>
 </body>
 </html>
-
