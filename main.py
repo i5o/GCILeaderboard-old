@@ -56,21 +56,27 @@ def student(name, e=0, org=None):
                 link = "http://www.google-melange.com" + \
                     row['operations']['row']['link']
                 type_ = row['columns']['types']
+
+                if "User Interface" in type_:
+                    interface += 1
+                    type_ = 'User Interface'
+                elif "Code" in type_:
+                    code += 1
+                    type_ = 'Code'
+                elif "Quality" in type_:
+                    quality += 1
+                    type_ = 'Quality Assurance'
+                elif "Documentation" in type_:
+                    doc += 1
+                    type_ = 'Documentation'
+                elif "Research" in type_:
+                    research += 1
+                    type_ = 'Outreach / Research'
+
                 task = (title, link, type_, orgname)
                 if task in tasks:
                     continue
                 tasks.append(task)
-
-                if "User Interface" in type_:
-                    interface += 1
-                elif "Code" in type_:
-                    code += 1
-                elif "Quality" in type_:
-                    quality += 1
-                elif "Documentation" in type_:
-                    doc += 1
-                elif "Research" in type_:
-                    research += 1
 
     tasks.sort()
     return render_template(
