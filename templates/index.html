@@ -20,8 +20,9 @@
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
-        <a class="navbar-brand" href="https://github.com/ignaciouy/GCILeaderboard">GCI Leadearboard (Unofficial)</a>
+        <a class="navbar-brand" href="https://github.com/ignaciouy/GCILeaderboard">GCI Leadearboard<small><small> (Unofficial)</small></small></a>
         <ul class="nav navbar-nav">
+            <li role="presentation"><a href="/">Home</a></li>
             <li role="presentation"><a href="{{ url_for('allorgs') }}">All</a></li>
             <li role="presentation"><a href="{{ url_for('leaderboard', org='apertium') }}">Apertium</a></li>
             <li role="presentation"><a href="{{ url_for('leaderboard', org='brlcad') }}">BRL-CAD</a></li>
