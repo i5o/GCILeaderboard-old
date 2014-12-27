@@ -1,6 +1,8 @@
 {% extends "index.html" %}
 
-{% block title %} Profile of {{ name }} {% endblock %}
+{% block title %}Profile of {{ name }} in {{ orgname }}{% endblock %}
+
+{% block desc %}Profile of {{ name }} on Google Code-In 2014 leaderboard{% endblock %} 
 
 {% block student_chart %}
 google.load("visualization", "1", {packages:["corechart"]});
@@ -40,7 +42,7 @@ google.load("visualization", "1", {packages:["corechart"]});
                 <div id="TasksChart" style="height: 500px; width: 100%;"></div> 
                 <div class="list-group" style="margin-top:5%;">
                     {% for task in tasks %}
-                    <a href="{{ task[1]}}" class="list-group-item list-group-item-info">{{ task[0] }}</a>
+                    <a href="{{ task[1] }}" title="See task - {{ task[0] }} - on Google Melange" class="list-group-item list-group-item-info">{{ task[0] }}<div style="text-align:right">({{ task[2] }})</div></a>
                     {% endfor %}
                 </div>
             </div>

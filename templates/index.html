@@ -5,9 +5,13 @@
     <meta charset="UTF-8">
     <title>
     {% block title %}
-        Unofficial Leaderboard for Google Code In
-    {% endblock %}
+        Home
+    {% endblock %} - Google Code-In Leaderboard
     </title>
+    
+    <meta name="Robots" content="follow, index" />
+    <meta name="Description" content="{% block desc %}Visit this website and check Google Code-In 2014 unofficial leaderboard!{% endblock %}" />
+    <meta name="Keywords" content="gci, google code-in, leaderboard, fossasia, kde, drupal, mifos, copyleft games, brlcad, aperitum, haiku, openmrs, sugar, wikimedia, sahana eden" />
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.4.1/canvas.min.js"></script>
@@ -18,6 +22,15 @@
     #content{margin:5% 10%;}
     </style>
     <script type="text/javascript">
+    $(document).ready(function(){
+	
+	//Click event to scroll to top
+	$('.scrollUpButton').click(function(){
+		$('html, body').animate({scrollTop : 0},800);
+		return false;
+	});
+	
+    });
     {% block student_chart %}
 
     {% endblock %}
@@ -51,8 +64,21 @@
         <br>
         Enjoy!
         <hr/>
-        <i>Code available on GPLv3 license. Feel free to <a href="https://github.com/ignaciouy/GCILeaderboard">fork it</a>!</i>
+        <i>Code available on GPLv3 license. Feel free to <a href="https://github.com/ignaciouy/GCILeaderboard">fork it</a>!</i><br/>
     {% endblock %}
     </div>
+    <footer style="margin: 5% 5%; font-size: 70%" >
+    <br/>
+    <hr/>
+    Created with love for Google Code-In
+    <div style="float: right">
+    <a href="#" title="Scroll up to top" class="scrollUpButton"><b>Scroll up to top</b></a>
+    <br/>
+    </div>
+    <br/>
+    Code available on GPLv3 License
+    <br/>
+    <a target="_blank" href="https://github.com/ignaciouy/GCILeaderboard/issues/new" title="Create new issue report">Create issue report</a>
+    </footer>
 </body>
 </html>

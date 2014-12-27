@@ -1,4 +1,9 @@
 {% extends "index.html" %}
+
+{% block title %}{{ org }}'s ranking{% endblock %}
+
+{% block desc %}See {{ org }}'s ranking on Google Code-In Leaderboard{% endblock %}
+
 {% block content %}
 <div class="page-header">
     <h1>Leaderboard for {{ org }}<br><small>{{ students }} students has finished {{ total }} tasks.</small></h1>
@@ -8,7 +13,7 @@
 <div data-role="collapsible" data-mini="true" data-content-theme="b" data-theme="b" data-collapsed-icon="carat-r" data-expanded-icon="carat-d" data-collapsed="false">
 <ol data-role="listview" data-inset="true" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
 {% for tup in leaderboard %}
-        <li><a href="{{ url_for('student', name=tup[0], e=tup[1], org=org) }}">{{ tup[0] }} has finished {{ tup[1] }} tasks in {{ org }}</a></li>
+        <li><a title="See profile of {{ tup[0] }} in {{ org }}" href="{{ url_for('student', name=tup[0], e=tup[1], org=org) }}">{{ tup[0] }} has finished {{ tup[1] }} tasks in {{ org }}</a></li>
 {% endfor %}
 </ol>
 </div>
