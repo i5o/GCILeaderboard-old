@@ -2,40 +2,43 @@
 
 {% block title %} Profile of {{ name }} {% endblock %}
 
+{% block student_chart %}
+google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Tasks\' category', 'Amount of finished tasks'],
+          ['Code',     {{ code }}],
+          ['User interface',      {{ interface }}],
+          ['Quality Assurance',  {{ quality }}],
+          ['Documentation', {{ documentation }}],
+          ['Outreach/Research',    {{ research }}]
+        ]);
+
+        var options = {
+          title: 'Tasks finished by {{ name }} per category',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('TasksChart'));
+
+        chart.draw(data, options);
+      }
+{% endblock %}
+
 {% block content %}
     <div class="page-header">
         <h1>{{ name }}<br><small>Has finished a total of {{ total }} tasks in {{ orgname }}.</small></h1>
     </div>
-    <script>
-        window.onload = function () {
-            var chart = new CanvasJS.Chart("chartContainer",
-            {
-                data: [
-                {
-                    type: "pie",
-                    showInLegend: true,
-                    dataPoints: [
-                        {  y: {{ code }}, legendText:"Code: {{ code }} ", indexLabel: "Code" },
-                        {  y: {{ interface }}, legendText:"User interface: {{ interface }} ", indexLabel: "User interface" },
-                        {  y: {{ documentation }}, legendText:"Documentation: {{ documentation }}", indexLabel: "Documentation" },
-                        {  y: {{ research }}, legendText:"Outreach/research: {{ research }}", indexLabel: "Outreach / research" },
-                        {  y: {{ quality }}, legendText:"Quality Assurance {{ quality }}" , indexLabel: "Quality Assurance"},
-                    ]
-                }
-                ]
-            });
-
-            chart.render();
-        }
-    </script>
     <div>
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Completed tasks</h3>
             </div>
             <div class="panel-body">
-                <div id="chartContainer" style="height: 30%; width: 100%;"></div> -->
-                <div class="list-group" style="margin-top:40%;">
+                <div id="TasksChart" style="height: 500px; width: 100%;"></div> 
+                <div class="list-group" style="margin-top:5%;">
                     {% for task in tasks %}
                     <a href="{{ task[1]}}" class="list-group-item list-group-item-info">{{ task[0] }}</a>
                     {% endfor %}
