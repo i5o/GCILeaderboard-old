@@ -57,21 +57,22 @@ def student(name, e=0, org=None):
                     row['operations']['row']['link']
                 type_ = row['columns']['types']
 
-                if "User Interface" in type_:
-                    interface += 1
-                    type_ = 'User Interface'
-                elif "Code" in type_:
+                if "Code" in type_:
                     code += 1
                     type_ = 'Code'
-                elif "Quality" in type_:
-                    quality += 1
-                    type_ = 'Quality Assurance'
                 elif "Documentation" in type_:
                     doc += 1
-                    type_ = 'Documentation'
+                    type_ = 'Documentation'   
                 elif "Research" in type_:
                     research += 1
                     type_ = 'Outreach / Research'
+                elif "Quality" in type_:
+                    quality += 1
+                    type_ = 'Quality Assurance'
+                          
+                elif "User Interface" in type_:
+                    interface += 1
+                    type_ = 'User Interface'
 
                 task = (title, link, type_, orgname)
                 if task in tasks:
