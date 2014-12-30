@@ -9,9 +9,9 @@
     <h1>Leaderboard for {{ org }}<br><small>{{ students }} students has finished {{ total }} tasks.</small></h1>
 </div>
 
-<div class="list-group" style="margin-top:5%;">
+<ol data-role="listview">
 {% for tup in leaderboard %}
-        <a class="list-group-item list-group-item-info" title="See profile of {{ tup[0] }} in {{ org }}" href="{{ url_for('student', name=tup[0], e=tup[1], org=org) }}">{{ tup[0] }} <span class="badge">{{ tup[1] }}</span></a>
+        <li><a title="See profile of {{ tup[0] }} in {{ org }}" href="{{ url_for('student', name=tup[0], e=tup[1], org=org) }}">{{ tup[0] }} has finished {{ tup[1] }} tasks in {{ org }}</a></li>
 {% endfor %}
-</div>
+</ol>
 {% endblock %}
