@@ -139,6 +139,86 @@ def leaderboard(org):
                            total=total,
                            students=total_students)
 
+@app.route('/alltasks/<org>/')
+def alltasks(org):
+    page_json_f = open("orgs/%s.json" % org, "r")
+    page_json = json.loads(page_json_f.read())
+    page_json_f.close()
+
+    code = 0
+    interface = 0
+    quality = 0
+    doc = 0
+    research = 0
+    total = 0
+
+
+    tasks = []
+
+    data = page_json['data']['']
+    for row in data:
+        total += 1
+        student_name = row['columns']['student']
+        title = parser.unescape(row['columns']['title']).capitalize()
+        link = "http://www.google-melange.com" + \
+            row['operations']['row']['link']
+        type_ = row['columns']['types']
+        finalcat = []
+        already = False
+
+        if "Code" in type_:
+            if not already:
+                code += 1
+                already = True
+            type_short = 'Code'
+            finalcat.insert(-1, type_short)
+
+        if "Documentation" in type_:
+            if not already:
+                doc += 1
+                already = True
+            type_short = 'Documentation'
+            finalcat.insert(-1, type_short)
+
+        if "Research" in type_:
+            if not already:
+                research += 1
+                already = True
+            type_short = 'Outreach / Research'
+            finalcat.insert(-1, type_short)
+
+        if "Quality" in type_:
+            if not already:
+                quality += 1
+                already = True
+            type_short = 'Quality Assurance'
+            finalcat.insert(-1, type_short)
+
+        if "User Interface" in type_:
+            if not already:
+                interface += 1
+                already = True
+            type_short = 'User Interface'
+            finalcat.insert(-1, type_short)
+
+        task = (title, link, finalcat, org)
+        if task in tasks:
+            continue
+        tasks.append(task)
+
+    tasks.sort()
+    return render_template(
+        "student.html",
+        tasks=tasks,
+        total=total,
+        code=code,
+        interface=interface,
+        quality=quality,
+        documentation=doc,
+        research=research,
+        name=org,
+        orgname=org)
+
 
 @app.route('/all/')
 def allorgs(draw=True):

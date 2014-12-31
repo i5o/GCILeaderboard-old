@@ -5,8 +5,8 @@
 {% block desc %}See {{ org }}'s ranking on Google Code-In Leaderboard{% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <h1>Leaderboard for {{ org }}<br><small>{{ students }} students has finished {{ total }} tasks.</small></h1>
+<div class="page-header" >
+    <a href="{{ url_for('alltasks', org=org) }}"><h1>Leaderboard for {{ org }}<br><small>{{ students }} students has finished {{ total }} tasks.</small></h1></a>
 </div>
 
 <ol data-role="listview">
