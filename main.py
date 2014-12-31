@@ -56,25 +56,45 @@ def student(name, e=0, org=None):
                 link = "http://www.google-melange.com" + \
                     row['operations']['row']['link']
                 type_ = row['columns']['types']
+                finalcat = []
+                already = False
 
                 if "Code" in type_:
-                    code += 1
-                    type_ = 'Code'
-                elif "Documentation" in type_:
-                    doc += 1
-                    type_ = 'Documentation'   
-                elif "Research" in type_:
-                    research += 1
-                    type_ = 'Outreach / Research'
-                elif "Quality" in type_:
-                    quality += 1
-                    type_ = 'Quality Assurance'
-                          
-                elif "User Interface" in type_:
-                    interface += 1
-                    type_ = 'User Interface'
+                    if not already:
+                        code += 1
+                        already = True
+                    type_short = 'Code'
+                    finalcat.insert(-1, type_short)
 
-                task = (title, link, type_, orgname)
+                if "Documentation" in type_:
+                    if not already:
+                        doc += 1
+                        already = True
+                    type_short = 'Documentation'
+                    finalcat.insert(-1, type_short)
+
+                if "Research" in type_:
+                    if not already:
+                        research += 1
+                        already = True
+                    type_short = 'Outreach / Research'
+                    finalcat.insert(-1, type_short)
+
+                if "Quality" in type_:
+                    if not already:
+                        quality += 1
+                        already = True
+                    type_short = 'Quality Assurance'
+                    finalcat.insert(-1, type_short)
+
+                if "User Interface" in type_:
+                    if not already:
+                        interface += 1
+                        already = True
+                    type_short = 'User Interface'
+                    finalcat.insert(-1, type_short)
+
+                task = (title, link, finalcat, orgname)
                 if task in tasks:
                     continue
                 tasks.append(task)
