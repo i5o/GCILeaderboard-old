@@ -139,6 +139,7 @@ def leaderboard(org):
                            total=total,
                            students=total_students)
 
+
 @app.route('/alltasks/<org>/')
 def alltasks(org):
     page_json_f = open("orgs/%s.json" % org, "r")
@@ -151,7 +152,6 @@ def alltasks(org):
     doc = 0
     research = 0
     total = 0
-
 
     tasks = []
 
