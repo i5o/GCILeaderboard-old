@@ -142,9 +142,71 @@ def leaderboard(org):
 
 @app.route('/alltasks/<org>/')
 def alltasks(org):
-    page_json_f = open("orgs/%s.json" % org, "r")
-    page_json = json.loads(page_json_f.read())
-    page_json_f.close()
+    allorgs = False
+    if u'All' in org:
+        allorgs = True
+
+    tasks = []
+
+    def internal_thing(
+            page_json,
+            code,
+            interface,
+            quality,
+            doc,
+            research,
+            total):
+        data = page_json['data']['']
+        for row in data:
+            total += 1
+            title = parser.unescape(row['columns']['title']).capitalize()
+            link = "http://www.google-melange.com" + \
+                row['operations']['row']['link']
+            type_ = row['columns']['types']
+            finalcat = []
+            already = False
+
+            if "Code" in type_:
+                if not already:
+                    code += 1
+                    already = True
+                type_short = 'Code'
+                finalcat.insert(-1, type_short)
+
+            if "Documentation" in type_:
+                if not already:
+                    doc += 1
+                    already = True
+                type_short = 'Documentation'
+                finalcat.insert(-1, type_short)
+
+            if "Research" in type_:
+                if not already:
+                    research += 1
+                    already = True
+                type_short = 'Outreach / Research'
+                finalcat.insert(-1, type_short)
+
+            if "Quality" in type_:
+                if not already:
+                    quality += 1
+                    already = True
+                type_short = 'Quality Assurance'
+                finalcat.insert(-1, type_short)
+
+            if "User Interface" in type_:
+                if not already:
+                    interface += 1
+                    already = True
+                type_short = 'User Interface'
+                finalcat.insert(-1, type_short)
+
+            task = (title, link, finalcat, org)
+            if task in tasks:
+                continue
+            tasks.append(task)
+
+        return code, interface, quality, doc, research, total
 
     code = 0
     interface = 0
@@ -152,59 +214,20 @@ def alltasks(org):
     doc = 0
     research = 0
     total = 0
+    if allorgs:
+        for orgname in orglist:
+            page_json_f = open("orgs/%s.json" % orgname, "r")
+            page_json = json.loads(page_json_f.read())
+            code, interface, quality, doc, research, total = internal_thing(
+                page_json, code, interface, quality, doc, research, total)
 
-    tasks = []
-
-    data = page_json['data']['']
-    for row in data:
-        total += 1
-        student_name = row['columns']['student']
-        title = parser.unescape(row['columns']['title']).capitalize()
-        link = "http://www.google-melange.com" + \
-            row['operations']['row']['link']
-        type_ = row['columns']['types']
-        finalcat = []
-        already = False
-
-        if "Code" in type_:
-            if not already:
-                code += 1
-                already = True
-            type_short = 'Code'
-            finalcat.insert(-1, type_short)
-
-        if "Documentation" in type_:
-            if not already:
-                doc += 1
-                already = True
-            type_short = 'Documentation'
-            finalcat.insert(-1, type_short)
-
-        if "Research" in type_:
-            if not already:
-                research += 1
-                already = True
-            type_short = 'Outreach / Research'
-            finalcat.insert(-1, type_short)
-
-        if "Quality" in type_:
-            if not already:
-                quality += 1
-                already = True
-            type_short = 'Quality Assurance'
-            finalcat.insert(-1, type_short)
-
-        if "User Interface" in type_:
-            if not already:
-                interface += 1
-                already = True
-            type_short = 'User Interface'
-            finalcat.insert(-1, type_short)
-
-        task = (title, link, finalcat, org)
-        if task in tasks:
-            continue
-        tasks.append(task)
+            page_json_f.close()
+    else:
+        page_json_f = open("orgs/%s.json" % org, "r")
+        page_json = json.loads(page_json_f.read())
+        page_json_f.close()
+        code, interface, quality, doc, research, total = internal_thing(
+            page_json, code, interface, quality, doc, research, total)
 
     tasks.sort()
     return render_template(
