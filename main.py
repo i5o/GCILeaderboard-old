@@ -234,19 +234,23 @@ def allorgs(draw=True):
     final_dict = {}
 
     current = 0
-    code = 0
-    interface = 0
-    quality = 0
-    doc = 0
-    research = 0
-    total = 0
+    totalorgs = {'sugarlabs': ['Sugar Labs', 0],
+                 'mifos': ['Mifos', 0],
+                 'apertium': ['Apertium', 0],
+                 'brlcad': ['BRL-CAD', 0],
+                 'sahana': ['Sahana Eden', 0],
+                 'copyleftgames': ['Copyleft Games', 0],
+                 'openmrs': ['OpenMRS', 0],
+                 'wikimedia': ['Wikimedia', 0],
+                 'kde': ['KDE', 0],
+                 'haiku': ['Haiku', 0],
+                 'drupal': ['Drupal', 0],
+                 'fossasia': ['FOSS Asia', 0]}
+
     for org in orglist:
         page_json_f = open("orgs/%s.json" % org, "r")
         page_json = json.loads(page_json_f.read())
         page_json_f.close()
-        code, interface, quality, doc, research, total = get_tasks(
-            page_json, code, interface, quality, doc, research, total)
-
         data = page_json['data']['']
         for row in data:
             student_name = row['columns']['student']
@@ -254,21 +258,18 @@ def allorgs(draw=True):
                 final_dict[student_name] += 1
             else:
                 final_dict[student_name] = 1
+            totalorgs[org][1] += 1
         current += 1
 
     sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1],
                          reverse=True)
     total = sum([int(tup[1]) for tup in final_dict.iteritems()])
     total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
-    return render_template("org.html", leaderboard=sorted_dict,
+    return render_template("all.html", leaderboard=sorted_dict,
                            org="All Organizations",
                            total=total,
                            students=total_students,
-                           code=code,
-                           interface=interface,
-                           quality=quality,
-                           documentation=doc,
-                           research=research)
+                           totalorgs=totalorgs)
 
 
 if __name__ == '__main__':
