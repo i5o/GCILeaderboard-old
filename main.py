@@ -27,6 +27,16 @@ def index():
     return render_template('index.html')
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return redirect('/error')
+
+
+@app.route('/error')
+def error():
+    return render_template('errors/404.html')
+
+
 @app.route('/student/<name>-count=<int:e>-org=<org>')
 def student(name, e=0, org=None):
     tasks = []

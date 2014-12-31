@@ -72,7 +72,11 @@
     <hr/>
     Created with love for Google Code-In
     <div style="float: right">
-    <a href="#" title="Scroll up to top" class="scrollUpButton"><b>Go top</b></a>
+    <a href="#" title="Scroll up to top" class="scrollUpButton"><b>Scroll to up</b></a>
+    {% if request.path == '/error' %}
+    <br>
+    404.html template from <a href='https://github.com/poxip/yagcil'>poxip gcil</a>
+    {% endif %}
     <br/>
     </div>
     <br/>
