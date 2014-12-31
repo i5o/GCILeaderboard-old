@@ -1,4 +1,5 @@
 import sys
+import operator
 from HTMLParser import HTMLParser
 from flask import *
 app = Flask(__name__)
@@ -8,18 +9,19 @@ parser = HTMLParser()
 BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
     "{orgname}?fmt=json&limit=500&idx=1"
 
-orglist = ['sugarlabs',
-           'mifos',
-           'apertium',
-           'brlcad',
-           'sahana',
-           'copyleftgames',
-           'openmrs',
-           'wikimedia',
-           'kde',
-           'haiku',
-           'drupal',
-           'fossasia']
+orglist = [
+    'apertium',
+    'brlcad',
+    'copyleftgames',
+    'drupal',
+    'fossasia',
+    'haiku',
+    'kde',
+    'mifos',
+    'openmrs',
+    'sahana',
+    'sugarlabs',
+    'wikimedia']
 
 
 def get_tasks(
@@ -234,18 +236,19 @@ def allorgs(draw=True):
     final_dict = {}
 
     current = 0
-    totalorgs = {'sugarlabs': ['Sugar Labs', 0],
-                 'mifos': ['Mifos', 0],
-                 'apertium': ['Apertium', 0],
-                 'brlcad': ['BRL-CAD', 0],
-                 'sahana': ['Sahana Eden', 0],
-                 'copyleftgames': ['Copyleft Games', 0],
-                 'openmrs': ['OpenMRS', 0],
-                 'wikimedia': ['Wikimedia', 0],
-                 'kde': ['KDE', 0],
-                 'haiku': ['Haiku', 0],
-                 'drupal': ['Drupal', 0],
-                 'fossasia': ['FOSS Asia', 0]}
+    totalorgs = {
+        'apertium': ['Apertium', 0],
+        'brlcad': ['BRL-CAD', 0],
+        'copyleftgames': ['Copyleft Games', 0],
+        'drupal': ['Drupal', 0],
+        'fossasia': ['FOSS Asia', 0],
+        'haiku': ['Haiku', 0],
+        'kde': ['KDE', 0],
+        'mifos': ['Mifos', 0],
+        'openmrs': ['OpenMRS', 0],
+        'sahana': ['Sahana Eden', 0],
+        'sugarlabs': ['Sugar Labs', 0],
+        'wikimedia': ['Wikimedia', 0]}
 
     for org in orglist:
         page_json_f = open("orgs/%s.json" % org, "r")
@@ -265,6 +268,8 @@ def allorgs(draw=True):
                          reverse=True)
     total = sum([int(tup[1]) for tup in final_dict.iteritems()])
     total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
+
+    totalorgs = sorted(totalorgs.iteritems(), key=lambda x: x[0])
     return render_template("all.html", leaderboard=sorted_dict,
                            org="All Organizations",
                            total=total,

@@ -10,9 +10,9 @@ google.setOnLoadCallback(drawChart);
 function drawChart() {
 
     var data = google.visualization.arrayToDataTable([
-    ['Tasks\' category', 'Amount of finished tasks'],
+    ['', ''],
     {% for tup in totalorgs %}
-        ["{{ totalorgs[tup][0] }}", {{ totalorgs[tup][1] }}],
+        ["{{ tup[1][0] }}", {{ tup[1][1] }}],
     {% endfor %}
     ]);
 
