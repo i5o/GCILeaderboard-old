@@ -125,9 +125,12 @@ def student(name, e=0, org=None):
 
 @app.route('/org/<org>/')
 def leaderboard(org):
-    page_json_f = open("orgs/%s.json" % org, "r")
-    page_json = json.loads(page_json_f.read())
-    page_json_f.close()
+    try:
+        page_json_f = open("orgs/%s.json" % org, "r")
+        page_json = json.loads(page_json_f.read())
+        page_json_f.close()
+    except:
+        return redirect('/error')
 
     final_dict = {}
 
