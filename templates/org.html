@@ -4,11 +4,37 @@
 
 {% block desc %}See {{ org }}'s ranking on Google Code-In Leaderboard{% endblock %}
 
+{% block student_chart %}
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+    ['Tasks\' category', 'Amount of finished tasks'],
+    ['Code',     {{ code }}],
+    ['User interface',      {{ interface }}],
+    ['Quality Assurance',  {{ quality }}],
+    ['Documentation / Training', {{ documentation }}],
+    ['Outreach / Research',    {{ research }}]
+    ]);
+
+    var options = {
+        is3D: false,
+        backgroundColor: '#F8F8F8',
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('TasksChart'));
+
+    chart.draw(data, options);
+}
+{% endblock %}
+
 {% block content %}
 <div class="page-header" >
-    <a href="{{ url_for('alltasks', org=org) }}"><h1>Leaderboard for {{ org }}<br><small>{{ students }} students has finished {{ total }} tasks.</small></h1></a>
+    <h1>Leaderboard for {{ org }}<br><small>{{ students }} students has finished {{ total }} tasks.</small></h1>
 </div>
 
+<div id="TasksChart" style="height: 500px; width: 100%;"></div>
 <ol data-role="listview">
 {% for tup in leaderboard %}
         <li><a title="See profile of {{ tup[0] }} in {{ org }}" href="{{ url_for('student', name=tup[0], e=tup[1], org=org) }}">{{ tup[0] }} has finished {{ tup[1] }} tasks in {{ org }}</a></li>
