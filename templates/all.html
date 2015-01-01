@@ -48,7 +48,7 @@ function drawChart() {
 <div id="TasksChart" style="height: 500px; width: 100%;"></div>
 <ol data-role="listview">
 {% for tup in leaderboard %}
-        <li><a title="See profile of {{ tup[0] }} in {{ org }}" href="{{ url_for('student', name=tup[0], e=tup[1], org=org) }}">{{ tup[0] }} has finished {{ tup[1] }} tasks in {{ org }}</a></li>
+        <li><a title="See profile of {{ tup[0] }} in {{ org }}" href="{{ url_for('student', name=tup[0]) }}">{{ tup[0] }} has finished {{ tup[1] }} tasks in {{ org }}</a></li>
 {% endfor %}
 </ol>
 {% endblock %}

@@ -103,6 +103,8 @@ def error():
 
 currentprocess = None
 lastupdated = str(datetime.datetime.today())
+
+
 @app.route('/update')
 def update():
     global currentprocess, lastupdated
@@ -115,8 +117,9 @@ def update():
     return redirect('/all')
 
 
-@app.route('/student/<name>-count=<int:e>-org=<org>')
-def student(name, e=0, org=None):
+@app.route('/student/<name>', defaults={'org': u'All Organizations'})
+@app.route('/student/<name>/<org>')
+def student(name, org=u'All'):
     tasks = []
     code = 0
     interface = 0
@@ -125,9 +128,7 @@ def student(name, e=0, org=None):
     research = 0
     total = 0
 
-    isAll = False
-    if u'All' in org:
-        isAll = True
+    isAll = u'All' in org
 
     for orgname in orglist:
         page_json_f = open("orgs/%s.json" % orgname, "r")
@@ -269,9 +270,13 @@ def allorgs(draw=True):
         'wikimedia': ['Wikimedia', 0]}
 
     for org in orglist:
-        page_json_f = open("orgs/%s.json" % org, "r")
-        page_json = json.loads(page_json_f.read())
-        page_json_f.close()
+        try:
+            page_json_f = open("orgs/%s.json" % org, "r")
+            page_json = json.loads(page_json_f.read())
+            page_json_f.close()
+        except:
+            return redirect('/error')
+
         data = page_json['data']['']
         for row in data:
             student_name = row['columns']['student']
