@@ -1,6 +1,5 @@
 import sys
-import requests
-import json
+import operator
 from HTMLParser import HTMLParser
 from flask import *
 app = Flask(__name__)
@@ -100,19 +99,6 @@ def page_not_found(e):
 @app.route('/error')
 def error():
     return render_template('errors/404.html')
-
-
-@app.route('/update')
-def update():
-    for org in orglist:
-        # Adding a progress bar might be cool ?
-        page_url = BASEURL.format(orgname=org)
-        page = requests.get(page_url)
-        data = page.json()
-        f = open("orgs/%s.json" % org, "w")
-        f.write(json.dumps(data))
-        f.close()
-    return redirect('/index')
 
 
 @app.route('/student/<name>-count=<int:e>-org=<org>')

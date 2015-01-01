@@ -34,10 +34,6 @@ function drawChart() {
     <h1>Leaderboard for {{ org }}<br><small>{{ students }} students has finished {{ total }} tasks.</small></h1>
 </div>
 
-<button type="button" class="btn btn-default">
-    <a href="/update" style="text-decoration: none;">Update</a>
-</button>
-
 <div id="TasksChart" style="height: 500px; width: 100%;"></div>
 <ol data-role="listview">
 {% for tup in leaderboard %}
