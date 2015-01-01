@@ -108,17 +108,14 @@ def error():
     return render_template('errors/404.html')
 
 currentprocess = None
-lastupdated = str(datetime.datetime.today())
-
 
 @app.route('/update')
 def update():
-    global currentprocess, lastupdated
+    global currentprocess
     if currentprocess:
         currentprocess.terminate()
         currentprocess = None
     today = datetime.datetime.today()
-    lastupdated = str(datetime.datetime.today())
     currentprocess = subprocess.Popen(["python", "update.py"])
     return redirect('/all')
 
@@ -254,7 +251,7 @@ def leaderboard(org):
 
 @app.route('/all/')
 def allorgs(draw=True):
-    global currentprocess, lastupdated
+    global currentprocess
     if currentprocess:
         if currentprocess.poll() == 0:
             currentprocess = None
@@ -304,7 +301,6 @@ def allorgs(draw=True):
                            total=total,
                            students=total_students,
                            totalorgs=totalorgs,
-                           lastupdated=lastupdated,
                            updating=bool(currentprocess))
 
 
