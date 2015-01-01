@@ -87,6 +87,12 @@ def get_tasks(
     return code, interface, quality, doc, research, total
 
 
+@app.route('/gitpull')
+def gitpull():
+    subprocess.Popen(["git", "pull", "--force"])
+    return redirect('/')
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
