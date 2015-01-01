@@ -1,10 +1,10 @@
 import sys
-import requests
 import json
 from HTMLParser import HTMLParser
 from flask import *
 app = Flask(__name__)
-
+import subprocess
+import datetime
 parser = HTMLParser()
 
 BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
@@ -101,18 +101,31 @@ def page_not_found(e):
 def error():
     return render_template('errors/404.html')
 
+currentprocess = None
+today = datetime.datetime.today()
+lastupdated = "%d/%d/%d %d:%d:%d" % (today.day,
+                                     today.month,
+                                     today.year,
+                                     today.hour,
+                                     today.minute,
+                                     today.second)
+
 
 @app.route('/update')
 def update():
-    for org in orglist:
-        # Adding a progress bar might be cool ?
-        page_url = BASEURL.format(orgname=org)
-        page = requests.get(page_url)
-        data = page.json()
-        f = open("orgs/%s.json" % org, "w")
-        f.write(json.dumps(data))
-        f.close()
-    return redirect('/index')
+    global currentprocess, lastupdated
+    if currentprocess:
+        currentprocess.terminate()
+        currentprocess = None
+    today = datetime.datetime.today()
+    lastupdated = "%d/%d/%d %d:%d:%d" % (today.day,
+                                         today.month,
+                                         today.year,
+                                         today.hour,
+                                         today.minute,
+                                         today.second)
+    currentprocess = subprocess.Popen(["python", "update.py"])
+    return redirect('/all')
 
 
 @app.route('/student/<name>-count=<int:e>-org=<org>')
@@ -247,6 +260,10 @@ def leaderboard(org):
 
 @app.route('/all/')
 def allorgs(draw=True):
+    global currentprocess, lastupdated
+    if currentprocess:
+        if currentprocess.poll() == 0:
+            currentprocess = None
     final_dict = {}
 
     current = 0
@@ -288,7 +305,9 @@ def allorgs(draw=True):
                            org="All Organizations",
                            total=total,
                            students=total_students,
-                           totalorgs=totalorgs)
+                           totalorgs=totalorgs,
+                           lastupdated=lastupdated,
+                           updating=bool(currentprocess))
 
 
 if __name__ == '__main__':

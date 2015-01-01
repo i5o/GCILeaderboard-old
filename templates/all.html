@@ -32,6 +32,19 @@ function drawChart() {
     <h1>Leaderboard for {{ org }}<br><small>{{ students }} students has finished {{ total }} tasks.</small></h1>
 </div>
 
+{% if updating %}
+<div class="alert alert-info" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Updating:</span> Updating task list.. <small>Refresh this page in few minutes.</small>
+</div>
+{% endif %}
+
+{% if not updating %}
+<button type="button" class="btn btn-default">
+    <a href="/update" style="text-decoration: none;">Update <small> <br>Last update: {{lastupdated}}</small></a>
+</button>
+{% endif %}
+
 <div id="TasksChart" style="height: 500px; width: 100%;"></div>
 <ol data-role="listview">
 {% for tup in leaderboard %}
