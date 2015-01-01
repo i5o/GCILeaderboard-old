@@ -102,15 +102,7 @@ def error():
     return render_template('errors/404.html')
 
 currentprocess = None
-today = datetime.datetime.today()
-lastupdated = "%d/%d/%d %d:%d:%d" % (today.day,
-                                     today.month,
-                                     today.year,
-                                     today.hour,
-                                     today.minute,
-                                     today.second)
-
-
+lastupdated = str(datetime.datetime.today())
 @app.route('/update')
 def update():
     global currentprocess, lastupdated
@@ -118,12 +110,7 @@ def update():
         currentprocess.terminate()
         currentprocess = None
     today = datetime.datetime.today()
-    lastupdated = "%d/%d/%d %d:%d:%d" % (today.day,
-                                         today.month,
-                                         today.year,
-                                         today.hour,
-                                         today.minute,
-                                         today.second)
+    lastupdated = str(datetime.datetime.today())
     currentprocess = subprocess.Popen(["python", "update.py"])
     return redirect('/all')
 
