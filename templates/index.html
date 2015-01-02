@@ -18,33 +18,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.4.1/canvas.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" id="font-awesome-css" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css" media="screen">
     <style>
     #content{margin:5% 7% 2%;}
-
     @media (max-width: 1400px){
         #content{margin:10% 7% 2%;}
         }
-
     @media (max-width: 1280px){
         #content{margin:15% 7% 2%;}
         }
 
-    .scrollUpButton{
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        -ms-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
-        transition: all 0.5s ease-in-out;
-    }
-    .scrollUpBotton.show {
-        visibility:visible;
-        cursor:pointer;
-        opacity: 1.0;
-    }   
     </style>
     <script type="text/javascript">
     $(document).ready(function(){
+
 	//Click event to scroll to top
 	$('.scrollUpButton').click(function(){
 		$('html, body').animate({scrollTop : 0},800);
@@ -52,22 +38,12 @@
 	});
 
     });
-    $(function(){
-            $(document).on( 'scroll', function(){
-                if ($(window).scrollTop() > 100) {
-                    $('.scroll-top-wrapper').addClass('show');
-                } else {
-                    $('.scroll-top-wrapper').removeClass('show');
-                }
-            });
-        });
     {% block student_chart %}
 
     {% endblock %}
     </script>
 </head>
 <body style="background-color:#F8F8F8">
-    <a href="#" style="position: fixed; top: 3em; right: 11em; border: 0; z-index: 1040" title="Scroll up to top" class="scrollUpButton"><img alt="Scroll to top" src="http://www.mydrivenortheast.com/images/scroll.png" style="width:4em;"></a>
     <a href="https://github.com/ignaciouy/GCILeaderboard"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 1040" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
     <nav class="navbar navbar-default navbar-fixed-top">
         <ul class="nav navbar-nav">
@@ -104,6 +80,7 @@
     <hr/>
     Created with love for Google Code-In
     <div style="float: right">
+    <a href="#" title="Scroll up to top" class="scrollUpButton"><b>Scroll to up</b></a>
     {% if request.path == '/error' %}
     <br>
     404.html template from <a href='https://github.com/poxip/yagcil'>poxip gcil</a>
