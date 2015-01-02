@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <style>
-    #content{margin:15% 7%;}
+    #content{margin:5% 7%;}
     @media (max-width: 1400px){
         #content{margin:10% 7%;}
         }
@@ -48,6 +48,7 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <ul class="nav navbar-nav">
             <li role="presentation"><a href="/">Home</a></li>
+            <li role="presentation"><a href="https://github.com/ignaciouy/GCILeaderboard">GitHub</a></li>
             <li role="presentation"><a href="{{ url_for('allorgs') }}">All</a></li>
             <li role="presentation"><a href="{{ url_for('leaderboard', org='apertium') }}">Apertium</a></li>
             <li role="presentation"><a href="{{ url_for('leaderboard', org='brlcad') }}">BRL-CAD</a></li>
@@ -61,7 +62,6 @@
             <li role="presentation"><a href="{{ url_for('leaderboard', org='sahana') }}">Sahana Eden</a></li>
             <li role="presentation"><a href="{{ url_for('leaderboard', org='sugarlabs') }}">Sugar Labs</a></li>
             <li role="presentation"><a href="{{ url_for('leaderboard', org='wikimedia') }}">Wikimedia</a></li>
-            <li role="presentation"><a href="https://github.com/ignaciouy/GCILeaderboard">About</a></li>
         </ul>
     </nav>
     <div id='content'>
@@ -75,7 +75,7 @@
     {% endblock %}
     </div>
     {% if request.path != "/" %}
-    <footer style="margin: 5% 5%; font-size: 12px;" >
+    <footer style="margin: 2% 5%; font-size: 12px;" >
     <br/>
     <hr/>
     Created with love for Google Code-In
