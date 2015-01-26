@@ -10,7 +10,7 @@ parser = HTMLParser()
 BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
     "{orgname}?fmt=json&limit=1000&idx=1"
 
-orglist = [
+orglist2014 = [
     'apertium',
     'brlcad',
     'copyleftgames',
@@ -22,6 +22,18 @@ orglist = [
     'openmrs',
     'sahana',
     'sugarlabs',
+    'wikimedia']
+
+orglist2013 = [
+    'apertium',
+    'brlcad',
+    'copyleftgames',
+    'drupal',
+    'haiku',
+    'kde',
+    'rtems',
+    'sahana',
+    'sugarlabs2013',
     'wikimedia']
 
 
@@ -94,24 +106,29 @@ def gitpull():
 
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def start_index():
+    return redirect('/gci2014')
+
+
+@app.route('/<year>/')
+def index(year='gci2014'):
+    return render_template('%s/index.html' % year)
 
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return redirect('/error')
+    return redirect('gci2014/error')
 
 
-@app.route('/error')
-def error():
-    return render_template('errors/404.html')
+@app.route('/<year>/error')
+def error(year):
+    return render_template('%s/errors/404.html' % year)
 
 currentprocess = None
 
 
-@app.route('/update/org/<orgname>')
-def update(orgname):
+@app.route('/<year>/update/org/<orgname>')
+def update(year, orgname):
     global currentprocess
     if currentprocess:
         currentprocess.terminate()
@@ -119,17 +136,23 @@ def update(orgname):
 
     f = open("updating", "w")
     f.close()
-    currentprocess = subprocess.Popen(["python", "update.py"])
-    if orgname == 'all':
-        link = '/all'
+
+    if year == 'gci2013':
+        script = 'update2013.py'
     else:
-        link = '/org/%s' % orgname
+        script = 'update2014.py'
+
+    currentprocess = subprocess.Popen(["python", script])
+    if orgname == 'all':
+        link = '%s/all' % year
+    else:
+        link = '%s/org/%s' % (year, orgname)
     return redirect(link)
 
 
-@app.route('/student/<name>', defaults={'org': u'All Organizations'})
-@app.route('/student/<name>/<org>')
-def student(name, org=u'All'):
+@app.route('/<year>/student/<name>', defaults={'org': u'All Organizations'})
+@app.route('/<year>/student/<name>/<org>')
+def student(year, name, org=u'All'):
     tasks = []
     code = 0
     interface = 0
@@ -140,8 +163,13 @@ def student(name, org=u'All'):
 
     isAll = u'All' in org
 
+    if year == 'gci2013':
+        orglist = orglist2013
+    else:
+        orglist = orglist2014
+
     for orgname in orglist:
-        page_json_f = open("orgs/%s.json" % orgname, "r")
+        page_json_f = open("%s/%s.json" % (year, orgname), "r")
         page_json = json.loads(page_json_f.read())
         page_json_f.close()
 
@@ -200,7 +228,7 @@ def student(name, org=u'All'):
 
     tasks.sort()
     return render_template(
-        "student.html",
+        "%s/student.html" % year,
         tasks=tasks,
         total=total,
         code=code,
@@ -212,14 +240,14 @@ def student(name, org=u'All'):
         orgname=org)
 
 
-@app.route('/org/<org>/')
-def leaderboard(org):
+@app.route('/<year>/org/<org>/')
+def leaderboard(org, year='gci2014'):
     try:
-        page_json_f = open("orgs/%s.json" % org, "r")
+        page_json_f = open("%s/%s.json" % (year, org), "r")
         page_json = json.loads(page_json_f.read())
         page_json_f.close()
     except:
-        return redirect('/error')
+        return redirect('%s/error' % year)
     code = 0
     interface = 0
     quality = 0
@@ -245,7 +273,7 @@ def leaderboard(org):
     is_updating = os.path.exists("updating")
     total = sum([int(tup[1]) for tup in final_dict.iteritems()])
     total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
-    return render_template("org.html", leaderboard=sorted_dict,
+    return render_template("%s/org.html" % year, leaderboard=sorted_dict,
                            org=org,
                            total=total,
                            students=total_students,
@@ -257,13 +285,26 @@ def leaderboard(org):
                            updating=is_updating)
 
 
-@app.route('/all/')
-def allorgs(draw=True):
+@app.route('/<year>/all/')
+def allorgs(year, draw=True):
     is_updating = os.path.exists("updating")
     final_dict = {}
 
     current = 0
-    totalorgs = {
+
+    totalorgs2013 = {
+        'apertium': ['Apertium', 0],
+        'brlcad': ['BRL-CAD', 0],
+        'copyleftgames': ['Copyleft Games', 0],
+        'drupal': ['Drupal', 0],
+        'haiku': ['Haiku', 0],
+        'kde': ['KDE', 0],
+        'rtems': ['RTEMS Project', 0],
+        'sahana': ['Sahana Eden', 0],
+        'sugarlabs2013': ['Sugar Labs', 0],
+        'wikimedia': ['Wikimedia', 0]}
+
+    totalorgs2014 = {
         'apertium': ['Apertium', 0],
         'brlcad': ['BRL-CAD', 0],
         'copyleftgames': ['Copyleft Games', 0],
@@ -277,13 +318,25 @@ def allorgs(draw=True):
         'sugarlabs': ['Sugar Labs', 0],
         'wikimedia': ['Wikimedia', 0]}
 
+    if year == 'gci2014':
+        orgsforyear = totalorgs2014
+    elif year == 'gci2013':
+        orgsforyear = totalorgs2013
+    else:
+        return redirect('%s/error' % year)
+
+    if year == 'gci2013':
+        orglist = orglist2013
+    else:
+        orglist = orglist2014
+
     for org in orglist:
         try:
-            page_json_f = open("orgs/%s.json" % org, "r")
+            page_json_f = open("%s/%s.json" % (year, org), "r")
             page_json = json.loads(page_json_f.read())
             page_json_f.close()
         except:
-            return redirect('/error')
+            return redirect('%s/error' % year)
 
         data = page_json['data']['']
         for row in data:
@@ -292,7 +345,7 @@ def allorgs(draw=True):
                 final_dict[student_name] += 1
             else:
                 final_dict[student_name] = 1
-            totalorgs[org][1] += 1
+            orgsforyear[org][1] += 1
         current += 1
 
     sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1],
@@ -300,12 +353,12 @@ def allorgs(draw=True):
     total = sum([int(tup[1]) for tup in final_dict.iteritems()])
     total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
 
-    totalorgs = sorted(totalorgs.iteritems(), key=lambda x: x[0])
-    return render_template("all.html", leaderboard=sorted_dict,
+    orgsforyear = sorted(orgsforyear.iteritems(), key=lambda x: x[0])
+    return render_template("%s/all.html" % year, leaderboard=sorted_dict,
                            org="All Organizations",
                            total=total,
                            students=total_students,
-                           totalorgs=totalorgs,
+                           totalorgs=orgsforyear,
                            updating=is_updating)
 
 

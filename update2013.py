@@ -3,26 +3,23 @@ import json
 import os
 
 try:
-    os.mkdir("orgs")
+    os.mkdir("gci2013")
 except:
     pass
-
 
 orglist = [
     'apertium',
     'brlcad',
     'copyleftgames',
     'drupal',
-    'fossasia',
     'haiku',
     'kde',
-    'mifos',
-    'openmrs',
+    'rtems',
     'sahana',
-    'sugarlabs',
+    'sugarlabs2013',
     'wikimedia']
 
-BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
+BASEURL = "http://www.google-melange.com/gci/org/google/gci2013/" \
     "{orgname}?fmt=json&limit=1000&idx=1"
 
 
@@ -33,7 +30,7 @@ def update_orgs():
         page_url = BASEURL.format(orgname=org)
         page = requests.get(page_url)
         data = page.json()
-        f = open("orgs/%s.json" % org, "w")
+        f = open("gci2013/%s.json" % org, "w")
         f.write(json.dumps(data))
         f.close()
 

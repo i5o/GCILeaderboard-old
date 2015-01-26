@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "gci2014/index.html" %}
 
 {% block title %}{{ org }}'s ranking{% endblock %}
 
@@ -48,14 +48,14 @@ function drawChart() {
 
 {% if not updating %}
 <button type="button" class="btn btn-default">
-    <a href="/update/org/{{ org }}" style="text-decoration: none;">Update</a>
+    <a href="/gci2014/update/org/{{ org }}" style="text-decoration: none;">Update</a>
 </button>
 {% endif %}
 
 <div id="TasksChart" style="height: 500px; width: 100%;"></div>
 <ol data-role="listview">
 {% for tup in leaderboard %}
-        <li><a title="See profile of {{ tup[0] }} in {{ org }}" href="{{ url_for('student', name=tup[0], org=org) }}" class="highlight">{{ tup[0] }}</a> has finished <span class="highlight">{{ tup[1] }}</span> tasks in {{ org }}</li>
+        <li><a title="See profile of {{ tup[0] }} in {{ org }}" href="{{ url_for('student', name=tup[0], org=org, year='gci2014') }}" class="highlight">{{ tup[0] }}</a> has finished <span class="highlight">{{ tup[1] }}</span> tasks in {{ org }}</li>
 {% endfor %}
 </ol>
 {% endblock %}

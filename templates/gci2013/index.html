@@ -10,12 +10,12 @@
     {% endblock %} - Google Code-In Leaderboard
     </title>
     <script>
-    if (window.location.protocol != "https:")
-          window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+    /*if (window.location.protocol != "https:")
+          window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);*/
     </script>
 
     <meta name="Robots" content="follow, index" />
-    <meta name="Description" content="{% block desc %}Visit this website and check Google Code-In 2014 unofficial leaderboard!{% endblock %}" />
+    <meta name="Description" content="{% block desc %}Visit this website and check Google Code-In 2013 unofficial leaderboard!{% endblock %}" />
     <meta name="Keywords" content="gci, google code-in, leaderboard, fossasia, kde, drupal, mifos, copyleft games, brlcad, aperitum, haiku, openmrs, sugar, wikimedia, sahana eden" />
 
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -39,11 +39,11 @@
     </style>
     <script type="text/javascript">
     $(document).ready(function(){
-	//Click event to scroll to top
-	$('.back-to-top').click(function(){
-		$('html, body').animate({scrollTop : 0}, 800);
-		return false;
-	});
+    //Click event to scroll to top
+    $('.back-to-top').click(function(){
+        $('html, body').animate({scrollTop : 0}, 800);
+        return false;
+    });
 
     });
 
@@ -63,30 +63,29 @@
     </script>
 </head>
 <body style="background-color:#F8F8F8">
-    <a href="https://github.com/ignaciouy/GCILeaderboard"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 1040" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <!-- <a href="https://github.com/ignaciouy/GCILeaderboard"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 1040" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a> -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <ul class="nav navbar-nav">
-            <li role="presentation"><a href="/" >Home</a></li>
-            <li role="presentation"><a href="{{ url_for('allorgs') }}">All</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='apertium') }}">Apertium</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='brlcad') }}">BRL-CAD</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='copyleftgames') }}">Copyleft Games</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='drupal') }}">Drupal</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='fossasia') }}">FOSS Asia</a>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='haiku') }}">Haiku</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='kde') }}">KDE</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='mifos') }}">Mifos</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='openmrs') }}">OpenMRS</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='sahana') }}">Sahana Eden</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='sugarlabs') }}">Sugar Labs</a></li>
-            <li role="presentation"><a href="{{ url_for('leaderboard', org='wikimedia') }}">Wikimedia</a></li>
+            <li role="presentation"><a href="/gci2013" >Home</a></li>
+            <li role="presentation"><a href="{{ url_for('allorgs', year='gci2013') }}">All</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='apertium', year='gci2013') }}">Apertium</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='brlcad', year='gci2013') }}">BRL-CAD</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='copyleftgames', year='gci2013') }}">Copyleft Games</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='drupal', year='gci2013') }}">Drupal</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='haiku', year='gci2013') }}">Haiku</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='kde', year='gci2013') }}">KDE</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='rtems', year='gci2013') }}">RTEMS Project</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='sahana', year='gci2013') }}">Sahana Eden</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='sugarlabs2013', year='gci2013') }}">Sugar Labs</a></li>
+            <li role="presentation"><a href="{{ url_for('leaderboard', org='wikimedia', year='gci2013') }}">Wikimedia</a></li>
+            <li role="presentation"><a href="/gci2014">GCI 2014 Leaderboard</a></li>
         </ul>
     </nav>
     <a href="#" class="back-to-top"><img src="{{ url_for('static', filename='scroll.png') }}" style="width:3em;"></a>
         <div id='content'>
     {% block content %}
         <h1>Hi!</h1>
-        This website is a per organization unofficial leaderboard for Google Code-In 2014. Click on your organization above.
+        This website is a per organization unofficial leaderboard for Google Code-In 2013. Click on your organization above.
         <br>
         Enjoy!
         <hr/>

@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "gci2013/index.html" %}
 
 {% block title %}{{ org }}'s ranking{% endblock %}
 
@@ -10,10 +10,12 @@ google.setOnLoadCallback(drawChart);
 function drawChart() {
 
     var data = google.visualization.arrayToDataTable([
-    ['', ''],
-    {% for tup in totalorgs %}
-        ["{{ tup[1][0] }}", {{ tup[1][1] }}],
-    {% endfor %}
+    ['Tasks\' category', 'Amount of finished tasks'],
+    ['Code',     {{ code }}],
+    ['User interface',      {{ interface }}],
+    ['Quality Assurance',  {{ quality }}],
+    ['Documentation / Training', {{ documentation }}],
+    ['Outreach / Research',    {{ research }}]
     ]);
 
     var options = {
@@ -28,6 +30,11 @@ function drawChart() {
 {% endblock %}
 
 {% block content %}
+<style type="text/css">
+.highlight {
+    font-size:15px;
+}
+</style>
 <div class="page-header" >
     <h1>Leaderboard for {{ org }}<br><small>{{ students }} students have finished {{ total }} tasks.</small></h1>
 </div>
@@ -41,14 +48,14 @@ function drawChart() {
 
 {% if not updating %}
 <button type="button" class="btn btn-default">
-    <a href="/update/org/all" style="text-decoration: none;">Update</a>
+    <a href="/gci2013/update/org/{{ org }}" style="text-decoration: none;">Update</a>
 </button>
 {% endif %}
 
 <div id="TasksChart" style="height: 500px; width: 100%;"></div>
 <ol data-role="listview">
 {% for tup in leaderboard %}
-        <li><a title="See profile of {{ tup[0] }} in {{ org }}" href="{{ url_for('student', name=tup[0]) }}">{{ tup[0] }} has finished {{ tup[1] }} tasks in {{ org }}</a></li>
+        <li><a title="See profile of {{ tup[0] }} in {{ org }}" href="{{ url_for('student', name=tup[0], org=org, year='gci2013') }}" class="highlight">{{ tup[0] }}</a> has finished <span class="highlight">{{ tup[1] }}</span> tasks in {{ org }}</li>
 {% endfor %}
 </ol>
 {% endblock %}
