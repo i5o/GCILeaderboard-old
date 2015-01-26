@@ -150,6 +150,8 @@ def update(year, orgname):
     f.close()
 
     if year == 'gci2013':
+        script = 'update2012.py'
+    elif year == 'gci2013':
         script = 'update2013.py'
     else:
         script = 'update2014.py'
