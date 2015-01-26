@@ -2,6 +2,6 @@ orgs/*
 *.py[co]
 *~
 updating
-gci2012/
-gci2013/
-gci2014/
+gci2012/*.json
+gci2013/*.json
+gci2014/*.json
