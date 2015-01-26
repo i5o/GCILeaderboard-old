@@ -149,7 +149,7 @@ def update(year, orgname):
     f = open("updating", "w")
     f.close()
 
-    if year == 'gci2013':
+    if year == 'gci2012':
         script = 'update2012.py'
     elif year == 'gci2013':
         script = 'update2013.py'
