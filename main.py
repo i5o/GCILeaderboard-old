@@ -36,6 +36,18 @@ orglist2013 = [
     'sugarlabs2013',
     'wikimedia']
 
+orglist2012 = [
+    'apertium',
+    'brlcad',
+    'copyleftgames',
+    'haiku',
+    'kde',
+    'rtems',
+    'sahana',
+    'fedora',
+    'sugarlabs2012',
+    'netbsd']
+
 
 def get_tasks(
         page_json,
@@ -163,7 +175,9 @@ def student(year, name, org=u'All'):
 
     isAll = u'All' in org
 
-    if year == 'gci2013':
+    if year == 'gci2012':
+        orglist = orglist2012
+    elif year == 'gci2013':
         orglist = orglist2013
     else:
         orglist = orglist2014
@@ -292,6 +306,18 @@ def allorgs(year, draw=True):
 
     current = 0
 
+    totalorgs2012 = {
+        'apertium': ['Apertium', 0],
+        'brlcad': ['BRL-CAD', 0],
+        'copyleftgames': ['Copyleft Games', 0],
+        'sugarlabs2012': ['Sugar Labs', 0],
+        'haiku': ['Haiku', 0],
+        'kde': ['KDE', 0],
+        'rtems': ['RTEMS Project', 0],
+        'sahana': ['Sahana Eden', 0],
+        'fedora': ['Fedora', 0],
+        'netbsd': ['NetBSD', 0]}
+
     totalorgs2013 = {
         'apertium': ['Apertium', 0],
         'brlcad': ['BRL-CAD', 0],
@@ -322,10 +348,14 @@ def allorgs(year, draw=True):
         orgsforyear = totalorgs2014
     elif year == 'gci2013':
         orgsforyear = totalorgs2013
+    elif year == 'gci2012':
+        orgsforyear = totalorgs2012
     else:
         return redirect('%s/error' % year)
 
-    if year == 'gci2013':
+    if year == 'gci2012':
+        orglist = orglist2012
+    elif year == 'gci2013':
         orglist = orglist2013
     else:
         orglist = orglist2014
