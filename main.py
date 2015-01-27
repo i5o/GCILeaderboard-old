@@ -1,14 +1,17 @@
 import sys
 import json
 import os
+import subprocess
+
 from HTMLParser import HTMLParser
 from flask import *
 app = Flask(__name__)
-import subprocess
 parser = HTMLParser()
 
-BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
-    "{orgname}?fmt=json&limit=1000&idx=1"
+if sys.platform == 'linux2':
+    import ctypes
+    libc = ctypes.cdll.LoadLibrary('libc.so.6')
+    libc.prctl(15, 'gci-leaderboard', 0, 0, 0)
 
 # Update 2012, 2013, 2014 list at startup
 os.system('python update2012.py')
