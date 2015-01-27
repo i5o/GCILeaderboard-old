@@ -13,10 +13,6 @@ if sys.platform == 'linux2':
     libc = ctypes.cdll.LoadLibrary('libc.so.6')
     libc.prctl(15, 'gci-leaderboard', 0, 0, 0)
 
-# Update 2012, 2013, 2014 list at startup
-os.system('python update2012.py')
-os.system('python update2013.py')
-os.system('python update2014.py')
 
 orglist2014 = [
     'apertium',
@@ -403,4 +399,8 @@ def allorgs(year, draw=True):
 
 
 if __name__ == '__main__':
+    # Update 2012, 2013, 2014 list at startup
+    os.system('python update2012.py')
+    os.system('python update2013.py')
+    os.system('python update2014.py')
     app.run(debug=True, host="0.0.0.0", port=int(sys.argv[1]))
