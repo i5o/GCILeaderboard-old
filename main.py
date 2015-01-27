@@ -10,6 +10,11 @@ parser = HTMLParser()
 BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
     "{orgname}?fmt=json&limit=1000&idx=1"
 
+# Update 2012, 2013, 2014 list at startup
+os.system('python update2012.py')
+os.system('python update2013.py')
+os.system('python update2014.py')
+
 orglist2014 = [
     'apertium',
     'brlcad',
