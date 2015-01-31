@@ -21,7 +21,7 @@ import sys
 import urllib2
 import json
 
-BASE_URL = "https://www.google-melange.com/gci"
+BASE_URL = "http://www.google-melange.com/gci"
 TASKS_URL = BASE_URL + \
     "/org/google/gci{year}/{orgname}?fmt=json&limit=1000&idx=1"
 ACCEPTED_ORGS_URL = BASE_URL + \
