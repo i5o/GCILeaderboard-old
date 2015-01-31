@@ -17,34 +17,58 @@
         <link rel="stylesheet" type="text/css" href="/static/css/sb-admin.css" />
         <script src="/static/js/modernizr.custom.js"></script>
         <script src="/static/js/jquery-2.1.3.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 	</head>
 	<body>
-		<div id="st-container" class="st-container">
+<script>
+        $(window).load(function(){
+            $('#welcomeModal').modal('show');
+        });</script>
+      <div id="welcomeModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lm">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="mySmallModalLabel">Welcome</h4>
+            </div>
+            <div class="modal-body">
+              The leaderboard is currently undergoing maintenance.<br>
+              This means: some features can be added/removed in a future.<br>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Ok <i class="fa fa-cogs "></i></button>
+          </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+        <div id="st-container" class="st-container">
 			<div class="st-pusher">
 				<nav class="st-menu st-effect-1" id="menu-3">
 					<ul>
-						<li><a id="nocolor">Google Code-In (Unofficial) Leaderboard</a></li>
-						<li><a class="icon icon-world" href="/org/all">All</a></li>
-						<li><a class="icon icon-world" href="/org/apertium">Apertium</a></li>
-						<li><a class="icon icon-world" href="/org/brlcad">BRL-Cad</a></li>
-						<li><a class="icon icon-world" href="/org/copyleftgames">Copyleft Games</a></li>
-                        <li><a class="icon icon-world" href="/org/drupal">Drupal</a></li>
-                        <li><a class="icon icon-world" href="/org/fossasia">FOSSASIA</a></li>
-                        <li><a class="icon icon-world" href="/org/haiku">Haiku</a></li>
-                        <li><a class="icon icon-world" href="/org/kde">KDE</a></li>
-                        <li><a class="icon icon-world" href="/org/mifos">Mifos Initiative</a></li>
-                        <li><a class="icon icon-world" href="/org/openmrs">OpenMRS</a></li>
-                        <li><a class="icon icon-world" href="/org/sahana">Sahana Software Foundation</a></li>
-                        <li><a class="icon icon-world" href="/org/sugarlabs">Sugar Labs</a></li>
-                        <li><a class="icon icon-world" href="/org/wikimedia">Wikimedia Foundation</a></li>
+						<li><a id="nocolor"><i class="fa fa-cogs fa-2x"></i><br>Google Code-In (Unofficial)<br>Leaderboard</a></li>
+						<li><a href="/org/all"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;All</a></li>
+						<li><a href="/org/apertium"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Apertium</a></li>
+						<li><a href="/org/brlcad"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;BRL-CAD</a></li>
+						<li><a href="/org/copyleftgames"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Copyleft Games</a></li>
+                        <li><a href="/org/drupal"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Drupal</a></li>
+                        <li><a href="/org/fossasia"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;FOSSASIA</a></li>
+                        <li><a href="/org/haiku"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Haiku</a></li>
+                        <li><a href="/org/kde"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;KDE</a></li>
+                        <li><a href="/org/mifos"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Mifos Initiative</a></li>
+                        <li><a href="/org/openmrs"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;OpenMRS</a></li>
+                        <li><a href="/org/sahana"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Sahana Software Foundation</a></li>
+                        <li><a href="/org/sugarlabs"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Sugar Labs</a></li>
+                        <li><a href="/org/wikimedia"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Wikimedia Foundation</a></li>
+                        <!-- <li><a href="/winners"><i class="fa fa-trophy"></i>&nbsp;&nbsp;&nbsp;Winners</a></li> -->
 					</ul>
 				</nav>
 				<div class="st-content"><!-- this is the wrapper for the content -->
 					<div class="st-content-inner"><!-- extra div for emulating position:fixed of the menu -->
                         <div style="width: 100%;text-transform: uppercase;font-size: 0.69em;line-height: 2.2;font-weight: 400;display: inline-block;" id="st-trigger-effects">
-                            <button data-effect="st-effect-1" class="fa fa-list-ul fa"></button>
+                            <button data-effect="st-effect-1" class="fa fa-list-ul fa-2x"></button>
                         </div>
                         {% block content %}
                         {% endblock %}
