@@ -1,0 +1,124 @@
+{% extends "index.html" %}
+
+{% block title %} Leaderboard for {{ orgname }} {% endblock %}
+{% block content %}
+
+<header class="codrops-header">
+    <h1>Leaderboard for {{ orgname }}<span>{{ totalStudents }} students have finished {{ totalTasks }} tasks.</span></h1>
+</header>
+<div style="margin:0 auto;" id="student-data">
+    <div class="col-lg-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-code fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ codeTasks }}</div>
+                        <div>Code <br>tagged tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-laptop fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ userInterfaceTasks }}</div>
+                        <div>User Interface<br>tagged tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-search fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ qualityAssuranceTasks }}</div>
+                        <div>Quality Assurance<br>tagged tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-book fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ documentationTasks }}</div>
+                        <div>Documentation<br>tagged tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-flag fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ outreachResearchTasks }}</div>
+                        <div>Research<br>tagged tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-cogs fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ totalTasks }}</div>
+                        <div>Closed<br>tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Student</th>
+                <th>Organization</th>
+                <th>Closed tasks</th>
+                <th>Closed tasks in % (aprox.)</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for data in userTasks %}
+        <tr>
+            <td>{{ userTasks.index(data) +1 }} </td>
+            <td>{{ data[1]['name'] }}</td>
+            <td>{{ orgname }}</td>
+            <td>{{ data[1]['tasks'] }}</td>
+            <td>{{ ((data[1]['tasks'] * 100) / totalTasks)|round|int }}</td>
+        </tr>{% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
