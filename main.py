@@ -71,5 +71,15 @@ def leaderboard_org(orgname):
         totalStudents=len(
             CONTEST_LEADERBOARD[CURRENT_CONTEST][orgname]))
 
+
+@app.route('/winners')
+def winners():
+    sortedWinners = sorted(
+        WINNERS,
+        key=lambda x: x[1],
+        reverse=False)
+
+    return render_template('winners.html', winners=sortedWinners)
+
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=int(sys.argv[1]))

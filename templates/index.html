@@ -22,7 +22,8 @@
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 	</head>
 	<body>
-<script>
+    <!--
+    <script>
         $(window).load(function(){
             $('#welcomeModal').modal('show');
         });</script>
@@ -41,15 +42,23 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Ok <i class="fa fa-cogs "></i></button>
           </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+          </div>
+        </div>
+      </div>
+        -->
         <div id="st-container" class="st-container">
 			<div class="st-pusher">
 				<nav class="st-menu st-effect-1" id="menu-3">
-					<ul>
-						<li><a id="nocolor"><i class="fa fa-cogs fa-2x"></i><br>Google Code-In (Unofficial)<br>Leaderboard</a></li>
-						<li><a href="/org/all"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;All</a></li>
+                    <ul style="height: 14%">
+                        <li><a id="nocolor"><i class="fa fa-cogs fa-3x"></i><br>Google Code-In (Unofficial)<br>Leaderboard</a></li>
+                    </ul>
+					<ul style="overflow: auto; height: 86%">
+                        <form id="donate" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <input type="hidden" name="cmd" value="_s-xclick">
+                            <input type="hidden" name="hosted_button_id" value="X7YSSX88V6JLJ">
+                        </form>
+                        <li><a href="#" onclick="form=document.getElementById('donate');form.submit();"><i class="fa fa-paypal"></i>&nbsp;&nbsp;&nbsp;Donate</a></li>
+                        <li><a href="/org/all"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;All</a></li>
 						<li><a href="/org/apertium"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Apertium</a></li>
 						<li><a href="/org/brlcad"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;BRL-CAD</a></li>
 						<li><a href="/org/copyleftgames"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Copyleft Games</a></li>
@@ -62,13 +71,13 @@
                         <li><a href="/org/sahana"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Sahana Software Foundation</a></li>
                         <li><a href="/org/sugarlabs"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Sugar Labs</a></li>
                         <li><a href="/org/wikimedia"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;Wikimedia Foundation</a></li>
-                        <!-- <li><a href="/winners"><i class="fa fa-trophy"></i>&nbsp;&nbsp;&nbsp;Winners</a></li> -->
-					</ul>
+                        <li><a href="/winners"><i class="fa fa-trophy"></i>&nbsp;&nbsp;&nbsp;Winners</a></li>
+                    </ul>
 				</nav>
 				<div class="st-content"><!-- this is the wrapper for the content -->
 					<div class="st-content-inner"><!-- extra div for emulating position:fixed of the menu -->
                         <div style="width: 100%;text-transform: uppercase;font-size: 0.69em;line-height: 2.2;font-weight: 400;display: inline-block;" id="st-trigger-effects">
-                            <button data-effect="st-effect-1" class="fa fa-list-ul fa-2x"></button>
+                            <button data-effect="st-effect-1" type="button" class="btn btn-default fa fa-list fa-2x"></button>
                         </div>
                         {% block content %}
                         {% endblock %}

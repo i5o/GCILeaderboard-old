@@ -4,6 +4,7 @@
 {% block content %}
 
 <header class="codrops-header">
+    <i class="fa fa-cogs fa-3x"></i>
     <h1>Leaderboard for {{ orgname }}<span>{{ totalStudents }} students have finished {{ totalTasks }} tasks.</span></h1>
 </header>
 <div style="margin:0 auto;" id="student-data">
@@ -116,7 +117,7 @@
             <td>{{ data[1]['name'] }}</td>
             <td>{{ orgname }}</td>
             <td>{{ data[1]['tasks'] }}</td>
-            <td>{{ ((data[1]['tasks'] * 100) / totalTasks)|round|int }}</td>
+            <td>{{ ((data[1]['tasks'] * 100) / totalTasks)|round(4)|float }}</td>
         </tr>{% endfor %}
         </tbody>
     </table>
