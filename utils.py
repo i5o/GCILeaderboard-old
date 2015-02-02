@@ -33,7 +33,8 @@ CURRENT_CONTEST = 2014
 ORG_TASKS = {2012: {}, 2013: {}, 2014: {}}
 ORG_LEADERBOARD = {2012: {}, 2013: {}, 2014: {}}
 CONTEST_LEADERBOARD = {2012: {}, 2013: {}, 2014: {}}
-ORGS_DATA = {2012: {}, 2013: {}, 2014: {}}
+# ORGS_DATA = {2012: {}, 2013: {}, 2014: {}}
+ORGS_DATA = {CURRENT_CONTEST: {}}
 PARSER = HTMLParser()
 
 # TODO: Generate this with a function?
@@ -180,14 +181,14 @@ class GCI():
             CONTEST_LEADERBOARD[year][org] = {}
             for row in data:
                 student_name = row['columns']['student']
-                if not student_name in CONTEST_LEADERBOARD[year][org]:
+                if student_name not in CONTEST_LEADERBOARD[year][org]:
                     CONTEST_LEADERBOARD[year][org][student_name] = {
                         'name': PARSER.unescape(student_name),
                         'tasks': 1}
                 else:
                     CONTEST_LEADERBOARD[year][org][student_name]['tasks'] += 1
 
-                if not student_name in CONTEST_LEADERBOARD[year]['all']:
+                if student_name not in CONTEST_LEADERBOARD[year]['all']:
                     CONTEST_LEADERBOARD[year]['all'][student_name] = {
                         'name': PARSER.unescape(student_name),
                         'tasks': 1}
@@ -197,7 +198,8 @@ class GCI():
 
     def get_student_tasks(self, username, year, org):
         """
-        Return the tasks of the student, requires username (str), year (int), org (str)
+        Return the tasks of the student,
+        requires username (str), year (int), org (str)
         """
         tasks_data = {'total_tags': {}, 'tasks': {}}
         orgs = [org]

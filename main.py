@@ -18,12 +18,11 @@
 
 import sys
 from utils import *
-GCI_INSTANCE = GCI()
 from flask import Flask
 from flask import render_template
 from flask import redirect
-
 app = Flask(__name__)
+GCI_INSTANCE = GCI()
 
 
 @app.route('/')
