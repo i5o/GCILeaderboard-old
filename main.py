@@ -22,7 +22,7 @@ from flask import Flask
 from flask import render_template
 from flask import redirect
 app = Flask(__name__)
-GCI_INSTANCE = GCI()
+GCI = GCIUtils()
 
 
 @app.route('/')
@@ -37,7 +37,7 @@ def page_not_found(e):
 
 @app.route('/org/<orgname>')
 def leaderboard_org(orgname):
-    GCI_INSTANCE.update_leaderboard(CURRENT_CONTEST)
+    GCI.update_leaderboard(CURRENT_CONTEST)
     orgs = list(ORGS_DATA[CURRENT_CONTEST]['orglist'])
     orgs.append('all')
     if orgname not in orgs:
@@ -50,8 +50,8 @@ def leaderboard_org(orgname):
         for org in ORGS_DATA[CURRENT_CONTEST]['orglist']:
             totalTasks += len(ORG_TASKS[CURRENT_CONTEST][org])
 
-    org_title = GCI_INSTANCE.get_org_name(CURRENT_CONTEST, orgname)
-    tags = GCI_INSTANCE.get_tasks_count(CURRENT_CONTEST, orgname)
+    org_title = GCI.get_org_name(CURRENT_CONTEST, orgname)
+    tags = GCI.get_tasks_count(CURRENT_CONTEST, orgname)
     userTasks = sorted(
         CONTEST_LEADERBOARD[CURRENT_CONTEST][orgname].iteritems(),
         key=lambda x: x[1]['tasks'],
@@ -68,7 +68,8 @@ def leaderboard_org(orgname):
         totalTasks=totalTasks,
         userTasks=userTasks,
         totalStudents=len(
-            CONTEST_LEADERBOARD[CURRENT_CONTEST][orgname]))
+            CONTEST_LEADERBOARD[CURRENT_CONTEST][orgname]),
+        org_id=orgname)
 
 
 @app.route('/winners')
@@ -79,6 +80,38 @@ def winners():
         reverse=False)
 
     return render_template('winners.html', winners=sortedWinners)
+
+
+@app.route('/student/<studentName>', defaults={'org': u'all'})
+@app.route('/student/<studentName>/<org>')
+def student(studentName, org):
+    studentTasks = GCI.get_student_tasks(studentName, CURRENT_CONTEST, org)
+    tags = studentTasks['total_tags']
+
+    studentTasks['tasks'] = sorted(studentTasks['tasks'].iteritems(),
+                                   key=lambda x: x[1]['title'],
+                                   reverse=False)
+
+    if not studentTasks['tasks']:
+        return render_template('errors/404.html')
+
+    try:
+        orgname = GCI.get_org_name(CURRENT_CONTEST, org)
+    except KeyError:
+        return render_template('errors/404.html')
+
+    return render_template(
+        'student.html',
+        codeTasks=tags['Code'],
+        userInterfaceTasks=tags['User Interface'],
+        qualityAssuranceTasks=tags['Quality Assurance'],
+        documentationTasks=tags['Documentation/Training'],
+        outreachResearchTasks=tags['Outreach/Research'],
+        studentName=studentName,
+        orgname=orgname,
+        totalTasks=len(studentTasks['tasks']),
+        tasks=studentTasks['tasks'],
+        year=CURRENT_CONTEST)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=int(sys.argv[1]))

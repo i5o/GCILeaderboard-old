@@ -1,56 +1,137 @@
-{% extends "gci2014/index.html" %}
+{% extends "index.html" %}
 
-{% block title %}Profile of {{ name }} in {{ orgname }}{% endblock %}
-
-{% block desc %}Profile of {{ name }} on Google Code-In 2014 leaderboard{% endblock %}
-
-{% block student_chart %}
-google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Tasks\' category', 'Amount of finished tasks'],
-          ['Code',     {{ code }}],
-          ['User interface',      {{ interface }}],
-          ['Quality Assurance',  {{ quality }}],
-          ['Documentation / Training', {{ documentation }}],
-          ['Outreach / Research',    {{ research }}]
-        ]);
-
-        var options = {
-          title: 'Tasks finished by {{ name }} per category',
-          is3D: false,
-          backgroundColor: '#FF',
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('TasksChart'));
-
-        chart.draw(data, options);
-      }
-{% endblock %}
-
+{% block title %} Profile of {{ studentName }} in {{ orgname }} {% endblock %}
 {% block content %}
-    <div class="page-header">
-        <h1>{{ name }}<br><small>Has finished a total of {{ total }} tasks in {{ orgname }}.</small></h1>
-    </div>
-    <div>
+
+<header class="codrops-header">
+    <i class="fa fa-cogs fa-3x"></i>
+    <h1>{{ studentName }}<span>Profile in {{ orgname }}</span></h1>
+</header>
+<div style="margin:0 auto;" id="student-data">
+    <div class="col-lg-2">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Completed tasks</h3>
-            </div>
-            <div class="panel-body">
-                <div id="TasksChart" style="height: 500px; width: 100%;"></div>
-                <div class="list-group" style="margin-top:5%;">
-                    {% for task in tasks %}
-                    <a href="{{ task[1] }}" title="See task - {{ task[0] }} - on Google Melange" class="list-group-item list-group-item-info">{{ task[0] }}
-                        {% for cat in task[2] %}
-                            <span class="badge">{{ cat }}</span>
-                        {% endfor %}
-                    </a>
-                    {% endfor %}
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-code fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ codeTasks }}</div>
+                        <div>Code <br>tagged tasks</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-lg-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-laptop fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ userInterfaceTasks }}</div>
+                        <div>User Interface<br>tagged tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-search fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ qualityAssuranceTasks }}</div>
+                        <div>Quality Assurance<br>tagged tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-book fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ documentationTasks }}</div>
+                        <div>Documentation<br>tagged tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-flag fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ outreachResearchTasks }}</div>
+                        <div>Research<br>tagged tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-cogs fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ totalTasks }}</div>
+                        <div>Closed<br>tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+jQuery(document).ready(function($) {
+      $(".clickableRow").click(function() {
+            window.document.location = $(this).attr("href");
+      });
+});
+</script>
+<style>
+tr.clickableRow { cursor: pointer; } 
+tr.clickableRow:hover { color: #31708F; /*font-weight: bold;*/}
+</style>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <!-- <th>Key</th> -->
+                <th>Organization</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for task in tasks %}
+        <tr class='clickableRow' href='//www.google-melange.com/gci/task/view/google/gci{{year}}/{{task}}'>
+            <td>{{ task[1]['title'] }}</td>
+            <!-- <td>{{ task }}</td> -->
+            <td>{{ task[1]['org'] }}</td>
+            <td>{% for tag in task[1]['tags'] %}
+                    {{tag}}
+                    {% if task[1]['tags']|length > task[1]['tags'].index(tag) + 1 %} | {% endif %}
+                {%endfor%}
+            </td>
+        </tr>{% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

@@ -102,7 +102,7 @@ WINNERS = [
 ]
 
 
-class GCI():
+class GCIUtils():
 
     def __init__(self):
         self.updating = False
@@ -201,13 +201,24 @@ class GCI():
         Return the tasks of the student,
         requires username (str), year (int), org (str)
         """
-        tasks_data = {'total_tags': {}, 'tasks': {}}
+        tasks_data = {
+            'total_tags': {
+                'User Interface': 0,
+                'Code': 0,
+                'Documentation/Training': 6,
+                'Outreach/Research': 0,
+                'Quality Assurance': 0},
+            'tasks': {}}
         orgs = [org]
         if org == 'all':
             orgs = ORGS_DATA[year]['orglist']
 
         for org in orgs:
-            data = ORG_TASKS[year][org]
+            try:
+                data = ORG_TASKS[year][org]
+            except KeyError:
+                return tasks_data
+
             for row in data:
                 realdata = row['columns']
                 if realdata['student'] != username:
@@ -218,17 +229,16 @@ class GCI():
                     taskKey=str(
                         realdata['key']))
                 tags = realdata['types'].split(', ')
+
                 for tag in tags:
-                    if tag in tasks_data['total_tags']:
-                        tasks_data['total_tags'][tag] += 1
-                    else:
-                        tasks_data['total_tags'][tag] = 1
+                    tasks_data['total_tags'][tag] += 1
+
                 tasks_data['tasks'][
                     realdata['key']] = {
-                    'title': title,
+                    'title': title.capitalize(),
                     'link': link,
                     'tags': tags,
-                    'org': org}
+                    'org': self.get_org_name(year, org)}
         return tasks_data
 
     def get_org_name(self, year, org_id):
@@ -237,7 +247,12 @@ class GCI():
         return ORGS_DATA[year]['chart_data'][org_id][0]
 
     def get_tasks_count(self, year, org_id):
-        tags = {}
+        tags = {
+            'User Interface': 0,
+            'Code': 0,
+            'Documentation/Training': 6,
+            'Outreach/Research': 0,
+            'Quality Assurance': 0}
         orgs = [org_id]
         if org_id == 'all':
             orgs = ORGS_DATA[year]['orglist']
@@ -248,8 +263,5 @@ class GCI():
                 realdata = row['columns']
                 tag_s = realdata['types'].split(', ')
                 for tag in tag_s:
-                    if tag in tags:
-                        tags[tag] += 1
-                    else:
-                        tags[tag] = 1
+                    tags[tag] += 1
         return tags
