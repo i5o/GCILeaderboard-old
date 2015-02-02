@@ -127,7 +127,7 @@ class GCIUtils():
         url = ACCEPTED_ORGS_URL.format(year=str(year))
         request = urllib2.Request(url)
         data = json.loads(urllib2.urlopen(request).read())['data']['']
-        orglist = []
+        orglist = ['all']
         # Data for the chart
         orglist_data = {}
         for item in data:
@@ -147,6 +147,8 @@ class GCIUtils():
         orglist = ORGS_DATA[year]['orglist']
 
         for org in orglist:
+            if org == 'all':
+                continue
             url = TASKS_URL.format(orgname=org, year=str(year))
             request = urllib2.Request(url)
             data = json.loads(urllib2.urlopen(request).read())['data']['']
@@ -177,6 +179,8 @@ class GCIUtils():
         orglist = ORGS_DATA[year]['orglist']
         CONTEST_LEADERBOARD[year]['all'] = {}
         for org in orglist:
+            if org == 'all':
+                continue
             data = ORG_TASKS[year][org]
             CONTEST_LEADERBOARD[year][org] = {}
             for row in data:
@@ -214,6 +218,8 @@ class GCIUtils():
             orgs = ORGS_DATA[year]['orglist']
 
         for org in orgs:
+            if org == 'all':
+                continue
             try:
                 data = ORG_TASKS[year][org]
             except KeyError:
@@ -259,6 +265,8 @@ class GCIUtils():
             orgs = ORGS_DATA[year]['orglist']
 
         for org in orgs:
+            if org == 'all':
+                continue
             data = ORG_TASKS[year][org]
             for row in data:
                 realdata = row['columns']
