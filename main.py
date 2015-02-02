@@ -40,7 +40,9 @@ def page_not_found(e):
 
 
 @app.route('/org/<orgname>', defaults={'year': str(CURRENT_CONTEST)})
+@app.route('/org/<orgname>/', defaults={'year': str(CURRENT_CONTEST)})
 @app.route('/gci<year>/org/<orgname>')
+@app.route('/gci<year>/org/<orgname>/')
 def leaderboard_org(year, orgname):
     GCI.update_leaderboard(int(year))
     orgs = list(ORGS_DATA[int(year)]['orglist'])
@@ -79,25 +81,6 @@ def leaderboard_org(year, orgname):
         org_id=orgname,
         orgs=pageOrgs,
         year=year)
-
-
-@app.route('/winners')
-def winners():
-    sortedWinners = sorted(
-        WINNERS,
-        key=lambda x: x[1],
-        reverse=False)
-
-    orgs = list(ORGS_DATA[CURRENT_CONTEST]['orglist'])
-    pageOrgs = []
-    for org in orgs:
-        pageOrgs.append(
-            {'id': org, 'name': GCI.get_org_name(CURRENT_CONTEST, org)})
-
-    return render_template(
-        'winners.html',
-        winners=sortedWinners,
-        orgs=pageOrgs)
 
 
 @app.route('/student/<studentName>', defaults={'year': '2014', 'org': u'all'})
