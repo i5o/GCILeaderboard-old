@@ -31,6 +31,16 @@
                         {% for org in orgs %}
                             <li><a href="/gci{{ year }}/org/{{org['id']}}"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;{{org['name']}}</a></li>
                         {% endfor %}
+                        {% if year == '2010' %}
+                            <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2010</a></li>
+                        {% else %}
+                            <li><a href="/gci2010/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2010</a></li>
+                        {% endif%}
+                        {% if year == '2011' %}
+                            <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2011</a></li>
+                        {% else %}
+                            <li><a href="/gci2011/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2011</a></li>
+                        {% endif%}
                         {% if year == '2012' %}
                             <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2012</a></li>
                         {% else %}

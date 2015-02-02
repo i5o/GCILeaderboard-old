@@ -31,12 +31,12 @@ LEADERBOARD_URL = BASE_URL + \
     "/org_scores/google/gci{year}/{orgname}?fmt=json&limit=1000&idx=0"
 TASK_URL = BASE_URL + "/task/view/google/gci{year}/{taskKey}"
 CURRENT_CONTEST = 2014
-ORG_TASKS = {2012: {}, 2013: {}, 2014: {}}
-# ORG_TASKS = tmp.tasks
-ORG_LEADERBOARD = {2012: {}, 2013: {}, 2014: {}}
-CONTEST_LEADERBOARD = {2012: {}, 2013: {}, 2014: {}}
-ORGS_DATA = {2012: {}, 2013: {}, 2014: {}}
-# ORGS_DATA = tmp.data
+ORG_TASKS = {2010: {}, 2011: {}, 2012: {}, 2013: {}, 2014: {}}
+ORG_LEADERBOARD = dict(ORG_TASKS)
+CONTEST_LEADERBOARD = dict(ORG_TASKS)
+ORGS_DATA = dict(ORG_TASKS)
+# ORG_TASKS = tmp.tasks
+# ORGS_DATA = tmp.data
 PARSER = HTMLParser()
 
 
@@ -47,6 +47,7 @@ class GCIUtils():
 
         # Start data. Take a few minutes
         for year in ORGS_DATA.keys():
+            continue
             data = self.get_orglist(year)
             ORGS_DATA[year]['orglist'] = data[0]
             ORGS_DATA[year]['chart_data'] = data[1]
@@ -88,6 +89,7 @@ class GCIUtils():
             if org == 'all':
                 continue
             url = TASKS_URL.format(orgname=org, year=str(year))
+            print url
             request = urllib2.Request(url)
             data = json.loads(urllib2.urlopen(request).read())['data']['']
             ORG_TASKS[year][org] = data
@@ -175,7 +177,18 @@ class GCIUtils():
                 tags = realdata['types'].split(', ')
 
                 for tag in tags:
-                    tasks_data['total_tags'][tag] += 1
+                    if tag in ["Training", "Documentation"]:
+                        tag = "Documentation/Training"
+                    elif tag in ["Outreach", "Research"]:
+                        tag = "Outreach/Research"
+                    elif tag == "Testing":
+                        tag = "Quality Assurance"
+                    elif tag == "Translation":
+                        tag = "User Interface"
+                    try:
+                        tasks_data['total_tags'][tag] += 1
+                    except KeyError:
+                        continue
 
                 tasks_data['tasks'][
                     realdata['key']] = {
@@ -195,7 +208,7 @@ class GCIUtils():
         tags = {
             'User Interface': 0,
             'Code': 0,
-            'Documentation/Training': 6,
+            'Documentation/Training': 0,
             'Outreach/Research': 0,
             'Quality Assurance': 0}
         orgs = [org_id]
@@ -210,5 +223,16 @@ class GCIUtils():
                 realdata = row['columns']
                 tag_s = realdata['types'].split(', ')
                 for tag in tag_s:
-                    tags[tag] += 1
+                    try:
+                        if tag in ["Training", "Documentation"]:
+                            tag = "Documentation/Training"
+                        elif tag in ["Outreach", "Research"]:
+                            tag = "Outreach/Research"
+                        elif tag == "Testing":
+                            tag = "Quality Assurance"
+                        elif tag == "Translation":
+                            tag = "User Interface"
+                        tags[tag] += 1
+                    except KeyError:
+                        continue
         return tags
