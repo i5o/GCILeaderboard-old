@@ -47,7 +47,7 @@ class GCIUtils():
 
         # Start data. Take a few minutes
         for year in ORGS_DATA.keys():
-            continue
+            # continue
             data = self.get_orglist(year)
             ORGS_DATA[year]['orglist'] = data[0]
             ORGS_DATA[year]['chart_data'] = data[1]
