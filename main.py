@@ -29,7 +29,7 @@ GCI = GCIUtils()
 @app.route('/gci<year>')
 @app.route('/gci<year>/')
 @app.route('/')
-def start_index(year):
+def start_index(year=2014):
     print year
     return redirect('/gci' + str(year) + '/org/all')
 
