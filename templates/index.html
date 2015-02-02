@@ -25,12 +25,27 @@
 	<body>
         <div id="st-container" class="st-container">
 			<div class="st-pusher">
-				<nav class="st-menu st-effect-1" id="menu-3">
+				<nav class="st-menu st-effect-1" id="menu-3" style="overflow-y: auto">
                         <ul>
-                        <li><a id="nocolor"><i class="fa fa-cogs fa-3x"></i><br>Google Code-In (Unofficial)<br>Leaderboard</a></li>
+                        <li><a id="nocolor"><i class="fa fa-cogs fa-3x"></i><br>Google Code-In {{year}}<br>(Unofficial) Leaderboard</a></li>
                         {% for org in orgs %}
-                            <li><a href="/org/{{org['id']}}"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;{{org['name']}}</a></li>
+                            <li><a href="/gci{{ year }}/org/{{org['id']}}"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;{{org['name']}}</a></li>
                         {% endfor %}
+                        {% if year == '2012' %}
+                            <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2012</a></li>
+                        {% else %}
+                            <li><a href="/gci2012/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2012</a></li>
+                        {% endif%}
+                        {% if year == '2013' %}
+                            <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2013</a></li>
+                        {% else %}
+                            <li><a href="/gci2013/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2013</a></li>
+                        {% endif%}
+                        {% if year == '2014' %}
+                            <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2014</a></li>
+                        {% else %}
+                            <li><a href="/gci2014/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2014</a></li>
+                        {% endif%}
                         <!--<li><a href="/winners"><i class="fa fa-trophy"></i>&nbsp;&nbsp;&nbsp;Winners</a></li>-->
                     </ul>
 				</nav>

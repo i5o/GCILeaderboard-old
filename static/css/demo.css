@@ -34,6 +34,13 @@ a:hover, a:focus {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
 }
 
+#year, #year:hover, #year:focus {
+	background: #E0F0D9;
+	color: #3E753F;
+    text-decoration: none;
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+}
+
 /* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
 .clearfix:before,
 .clearfix:after {

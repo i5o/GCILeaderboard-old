@@ -25,9 +25,13 @@ app = Flask(__name__)
 GCI = GCIUtils()
 
 
+@app.route('/gci<year>/', defaults={'year': str(CURRENT_CONTEST)})
+@app.route('/gci<year>')
+@app.route('/gci<year>/')
 @app.route('/')
-def start_index():
-    return redirect('/org/all')
+def start_index(year):
+    print year
+    return redirect('/gci' + str(year) + '/org/all')
 
 
 @app.errorhandler(404)
@@ -35,31 +39,32 @@ def page_not_found(e):
     return render_template('errors/404.html')
 
 
-@app.route('/org/<orgname>')
-def leaderboard_org(orgname):
-    GCI.update_leaderboard(CURRENT_CONTEST)
-    orgs = list(ORGS_DATA[CURRENT_CONTEST]['orglist'])
+@app.route('/org/<orgname>', defaults={'year': str(CURRENT_CONTEST)})
+@app.route('/gci<year>/org/<orgname>')
+def leaderboard_org(year, orgname):
+    GCI.update_leaderboard(int(year))
+    orgs = list(ORGS_DATA[int(year)]['orglist'])
     if orgname not in orgs:
         return page_not_found(404)
 
     pageOrgs = []
     for org in orgs:
         pageOrgs.append(
-            {'id': org, 'name': GCI.get_org_name(CURRENT_CONTEST, org)})
+            {'id': org, 'name': GCI.get_org_name(int(year), org)})
 
     if orgname != 'all':
-        totalTasks = len(ORG_TASKS[CURRENT_CONTEST][orgname])
+        totalTasks = len(ORG_TASKS[int(year)][orgname])
     else:
         totalTasks = 0
-        for org in ORGS_DATA[CURRENT_CONTEST]['orglist']:
+        for org in ORGS_DATA[int(year)]['orglist']:
             if org == 'all':
                 continue
-            totalTasks += len(ORG_TASKS[CURRENT_CONTEST][org])
+            totalTasks += len(ORG_TASKS[int(year)][org])
 
-    org_title = GCI.get_org_name(CURRENT_CONTEST, orgname)
-    tags = GCI.get_tasks_count(CURRENT_CONTEST, orgname)
+    org_title = GCI.get_org_name(int(year), orgname)
+    tags = GCI.get_tasks_count(int(year), orgname)
     userTasks = sorted(
-        CONTEST_LEADERBOARD[CURRENT_CONTEST][orgname].iteritems(),
+        CONTEST_LEADERBOARD[int(year)][orgname].iteritems(),
         key=lambda x: x[1]['tasks'],
         reverse=True)
 
@@ -70,9 +75,10 @@ def leaderboard_org(orgname):
         totalTasks=totalTasks,
         userTasks=userTasks,
         totalStudents=len(
-            CONTEST_LEADERBOARD[CURRENT_CONTEST][orgname]),
+            CONTEST_LEADERBOARD[int(year)][orgname]),
         org_id=orgname,
-        orgs=pageOrgs)
+        orgs=pageOrgs,
+        year=year)
 
 
 @app.route('/winners')
@@ -94,17 +100,17 @@ def winners():
         orgs=pageOrgs)
 
 
-@app.route('/student/<studentName>', defaults={'org': u'all'})
-@app.route('/student/<studentName>/<org>')
-def student(studentName, org):
-    studentTasks = GCI.get_student_tasks(studentName, CURRENT_CONTEST, org)
+@app.route('/student/<studentName>', defaults={'year': '2014', 'org': u'all'})
+@app.route('/gci<year>/student/<studentName>/<org>')
+def student(year, studentName, org):
+    studentTasks = GCI.get_student_tasks(studentName, int(year), org)
     tags = studentTasks['total_tags']
 
-    orgs = list(ORGS_DATA[CURRENT_CONTEST]['orglist'])
+    orgs = list(ORGS_DATA[int(year)]['orglist'])
     pageOrgs = []
     for org_ in orgs:
         pageOrgs.append(
-            {'id': org, 'name': GCI.get_org_name(CURRENT_CONTEST, org_)})
+            {'id': org, 'name': GCI.get_org_name(int(year), org_)})
 
     studentTasks['tasks'] = sorted(studentTasks['tasks'].iteritems(),
                                    key=lambda x: x[1]['title'],
@@ -114,7 +120,7 @@ def student(studentName, org):
         return render_template('errors/404.html')
 
     try:
-        orgname = GCI.get_org_name(CURRENT_CONTEST, org)
+        orgname = GCI.get_org_name(int(year), org)
     except KeyError:
         return render_template('errors/404.html')
 
@@ -124,7 +130,7 @@ def student(studentName, org):
         studentName=studentName,
         orgname=orgname,
         tasks=studentTasks['tasks'],
-        year=CURRENT_CONTEST,
+        year=year,
         orgs=pageOrgs)
 
 if __name__ == '__main__':

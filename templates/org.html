@@ -4,7 +4,7 @@
 {% block content %}
 
 <header class="codrops-header">
-    <i class="fa fa-cogs fa-3x"></i>
+    <i class="fa fa-cogs fa-3x">&nbsp;&nbsp;<p style="font-family: 'Lato'; display: inline;">{{year}}</p></i>
     <h1>{{ orgname }}<span>{{ totalStudents }} students have finished {{ totalTasks }} tasks.</span></h1>
 </header>
 <div style="margin:0 auto;" id="student-data">
@@ -123,7 +123,7 @@ tr.clickableRow:hover { color: #31708F; /*font-weight: bold;*/}
         </thead>
         <tbody>
 {% for data in userTasks %}
-        <tr class='clickableRow' href='/student/{{data[1]['name']}}/{{org_id}}'>
+        <tr class='clickableRow' href='/gci{{year}}/student/{{data[1]['name']}}/{{org_id}}'>
             <td>{{ userTasks.index(data) +1 }} </td>
             <td>{{ data[1]['name'] }}</td>
             <td>{{ orgname }}</td>
