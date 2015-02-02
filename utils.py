@@ -20,7 +20,7 @@ from HTMLParser import HTMLParser
 import sys
 import urllib2
 import json
-# import tmp
+import tmp
 
 BASE_URL = "http://www.google-melange.com/gci"
 TASKS_URL = BASE_URL + \
@@ -35,8 +35,8 @@ ORG_TASKS = {2010: {}, 2011: {}, 2012: {}, 2013: {}, 2014: {}}
 ORG_LEADERBOARD = {2010: {}, 2011: {}, 2012: {}, 2013: {}, 2014: {}
 CONTEST_LEADERBOARD = {2010: {}, 2011: {}, 2012: {}, 2013: {}, 2014: {}}
 ORGS_DATA = {2010: {}, 2011: {}, 2012: {}, 2013: {}, 2014: {}}
-# ORG_TASKS = tmp.tasks
-# ORGS_DATA = tmp.data
+ORG_TASKS = tmp.tasks
+ORGS_DATA = tmp.data
 PARSER = HTMLParser()
 
 
@@ -47,7 +47,7 @@ class GCIUtils():
 
         # Start data. Take a few minutes
         for year in ORGS_DATA.keys():
-            # continue
+            continue
             data = self.get_orglist(year)
             ORGS_DATA[year]['orglist'] = data[0]
             ORGS_DATA[year]['chart_data'] = data[1]
