@@ -2,17 +2,17 @@
   font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
-  src: local('Lato Light'), local('Lato-Light'), url(/static/KT3KS9Aol4WfR6Vas8kNcg.woff) format('woff');
+  src: local('Lato Light'), local('Lato-Light'), url(/static/fonts/KT3KS9Aol4WfR6Vas8kNcg.woff) format('application/font-woff');
 }
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
-  src: local('Lato Regular'), local('Lato-Regular'), url(/static/9k-RPmcnxYEPm8CNFsH2gg.woff) format('woff');
+  src: local('Lato Regular'), local('Lato-Regular'), url(/static/fonts/9k-RPmcnxYEPm8CNFsH2gg.woff) format('application/font-woff');
 }
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
-  src: local('Lato Bold'), local('Lato-Bold'), url(/static/wkfQbvfT_02e2IWO3yYueQ.woff) format('woff');
+  src: local('Lato Bold'), local('Lato-Bold'), url(/static/fonts/wkfQbvfT_02e2IWO3yYueQ.woff) format('application/font-woff');
 }
