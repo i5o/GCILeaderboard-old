@@ -121,7 +121,7 @@ tr.clickableRow:hover { color: #31708F; /*font-weight: bold;*/}
         </thead>
         <tbody>
 {% for task in tasks %}
-        <tr class='clickableRow' href='//www.google-melange.com/gci/task/view/google/gci{{year}}/{{task}}'>
+        <tr class='clickableRow' href='//www.google-melange.com/gci/task/view/google/gci{{year}}/{{task[1]['key']}}'>
             <td>{{ task[1]['title'] }}</td>
             <!-- <td>{{ task }}</td> -->
             <td>{{ task[1]['org'] }}</td>

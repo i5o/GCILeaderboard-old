@@ -238,7 +238,8 @@ class GCIUtils():
                     'title': title.capitalize(),
                     'link': link,
                     'tags': tags,
-                    'org': self.get_org_name(year, org)}
+                    'org': self.get_org_name(year, org),
+                    'key': realdata['key']}
         return tasks_data
 
     def get_org_name(self, year, org_id):
