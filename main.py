@@ -104,7 +104,7 @@ def leaderboard_org(year, orgname):
         reloaded=TIMES_RELOADED[request.path])
 
 
-@app.route('/student/<studentName>', defaults={'year': '2014', 'org': u'all'})
+@app.route('/student/<studentName>', defaults={'year': str(CURRENT_CONTEST), 'org': u'all'})
 @app.route('/gci<year>/student/<studentName>/<org>')
 def student(year, studentName, org):
     update_times()
