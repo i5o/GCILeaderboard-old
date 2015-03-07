@@ -3,9 +3,9 @@
 {% block title %} Leaderboard for {{ orgname }} {% endblock %}
 {% block content %}
 
-<header class="codrops-header">
+<header class="codrops-header"><br>
     <i class="fa fa-cogs fa-3x">&nbsp;&nbsp;<p style="font-family: 'Lato'; display: inline;">{{year}}</p></i>
-    <h1>{{ orgname }}<span>{{ totalStudents }} students have finished {{ totalTasks }} tasks.</span></h1>
+    <h1>{{ orgname }}<span>{{ totalStudents }} students have finished {{ totalTasks }} tasks.<small><p>This page has been loaded {{ reloaded }} times.</p></small></span></h1>
 </header>
 <div style="margin:0 auto;" id="student-data">
     <div class="col-lg-2">

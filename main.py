@@ -17,26 +17,45 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
+import os
+import json
 from utils import *
 from flask import Flask
 from flask import render_template
 from flask import redirect
+from flask import request
+
 app = Flask(__name__)
 GCI = GCIUtils()
+
+
+@app.route('/*')
+def update_times():
+    global TIMES_RELOADED
+    if not os.path.exists("visits.json"):
+        open("visits.json", "w").write("{}")
+
+    TIMES_RELOADED = json.loads(open("visits.json", "r").read())
+    if not request.path in TIMES_RELOADED:
+        TIMES_RELOADED[request.path] = 1
+    else:
+        TIMES_RELOADED[request.path] += 1
+    open("visits.json", "w").write(json.dumps(TIMES_RELOADED))
 
 
 @app.route('/gci<year>/', defaults={'year': str(CURRENT_CONTEST)})
 @app.route('/gci<year>')
 @app.route('/gci<year>/')
 @app.route('/')
-def start_index(year=2014):
-    print year
+def start_index(year=CURRENT_CONTEST):
+    update_times()
     return redirect('/gci' + str(year) + '/org/all')
 
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('errors/404.html')
+    update_times()
+    return render_template('errors/404.html', reloaded=TIMES_RELOADED)
 
 
 @app.route('/org/<orgname>', defaults={'year': str(CURRENT_CONTEST)})
@@ -44,6 +63,7 @@ def page_not_found(e):
 @app.route('/gci<year>/org/<orgname>')
 @app.route('/gci<year>/org/<orgname>/')
 def leaderboard_org(year, orgname):
+    update_times()
     GCI.update_leaderboard(int(year))
     orgs = list(ORGS_DATA[int(year)]['orglist'])
     if orgname not in orgs:
@@ -80,12 +100,14 @@ def leaderboard_org(year, orgname):
             CONTEST_LEADERBOARD[int(year)][orgname]),
         org_id=orgname,
         orgs=pageOrgs,
-        year=year)
+        year=year,
+        reloaded=TIMES_RELOADED[request.path])
 
 
 @app.route('/student/<studentName>', defaults={'year': '2014', 'org': u'all'})
 @app.route('/gci<year>/student/<studentName>/<org>')
 def student(year, studentName, org):
+    update_times()
     studentTasks = GCI.get_student_tasks(studentName, int(year), org)
     tags = studentTasks['total_tags']
 
@@ -114,7 +136,8 @@ def student(year, studentName, org):
         orgname=orgname,
         tasks=studentTasks['tasks'],
         year=year,
-        orgs=pageOrgs)
+        orgs=pageOrgs,
+        reloaded=TIMES_RELOADED[request.path])
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=int(sys.argv[1]))
