@@ -1,29 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-        <title>
-        {% block title %}
-        {% endblock %}
-        </title>
+        <title>{% block title %}{% endblock %}</title>
         <meta name="Robots" content="follow, index" />
-        <meta name="Description" content="{% block desc %}Visit this website and check Google Code-In 2014 unofficial leaderboard!{% endblock %}" />
-        <meta name="Keywords" content="gci, google code-in, leaderboard, fossasia, kde, drupal, mifos, copyleft games, brlcad, aperitum, haiku, openmrs, sugar, wikimedia, sahana eden" />
+        <meta name="Description" content="{% block desc %}Visit this website and check Google Code-In {{ year }} unofficial leaderboard!{% endblock %}" />
+        <meta name="Keywords" content="gci, google code-in {{ year }}, GCI {{ year }}, gci leaderboard, leaderboard, top, {% for org in orgs %}{{org['name']}}, {%endfor%}" />
         <meta charset="UTF-8" />
-        <link href='//fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="/static/css/demo.css"/>
-        <link rel="stylesheet" type="text/css" href="/static/css/icons.css"/>
-        <link rel="stylesheet" type="text/css" href="/static/css/component.css"/>
-        <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/static/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/sb-admin.css" />
-        <script src="/static/js/modernizr.custom.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/css/leaderboardcss.css"/>
         <script src="/static/js/jquery-2.1.3.min.js"></script>
-        <script src="/static/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-        <style>
-        * { font-family: 'Lato' }
-</style>
 	</head>
 	<body>
         <div id="st-container" class="st-container">
@@ -34,36 +20,19 @@
                         {% for org in orgs %}
                             <li><a href="/gci{{ year }}/org/{{org['id']}}"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;{{org['name']}}</a></li>
                         {% endfor %}
-                        {% if year == '2010' %}
-                            <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2010</a></li>
-                        {% else %}
-                            <li><a href="/gci2010/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2010</a></li>
-                        {% endif%}
-                        {% if year == '2011' %}
-                            <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2011</a></li>
-                        {% else %}
-                            <li><a href="/gci2011/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2011</a></li>
-                        {% endif%}
-                        {% if year == '2012' %}
-                            <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2012</a></li>
-                        {% else %}
-                            <li><a href="/gci2012/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2012</a></li>
-                        {% endif%}
-                        {% if year == '2013' %}
-                            <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2013</a></li>
-                        {% else %}
-                            <li><a href="/gci2013/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2013</a></li>
-                        {% endif%}
-                        {% if year == '2014' %}
-                            <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2014</a></li>
-                        {% else %}
-                            <li><a href="/gci2014/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2014</a></li>
-                        {% endif%}
-                        <!--<li><a href="/winners"><i class="fa fa-trophy"></i>&nbsp;&nbsp;&nbsp;Winners</a></li>-->
+                        {% for y in ['2010', '2011', '2012', '2013', '2014'] %}
+                            {% if y == year %}
+                                <li><a id="year"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In {{ y }}</a></li>
+                            {% else %}
+                                <li><a href="/gci{{ y }}/"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In {{ y }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        <li><a id="year-disabled"><i class="fa fa-cogs"></i>&nbsp;&nbsp;&nbsp;Google Code-In 2015</a></li>
+
                     </ul>
 				</nav>
-				<div class="st-content"><!-- this is the wrapper for the content -->
-					<div class="st-content-inner"><!-- extra div for emulating position:fixed of the menu -->
+				<div class="st-content">
+					<div class="st-content-inner">
                         <div style="width: 100%;text-transform: uppercase;font-size: 0.69em;line-height: 2.2;font-weight: 400;display: inline-block;" id="st-trigger-effects">
                             <button data-effect="st-effect-1" type="button" class="btn btn-default fa fa-list fa-2x"></button>
                         </div>
@@ -85,35 +54,5 @@
   ga('send', 'pageview');
 
         </script>
-        <script type="text/javascript">
-        $(document).ready(function(){
-            //Click event to scroll to top
-            $('.back-to-top').click(function(){
-                $('html, body').animate({scrollTop : 0}, 800);
-            return false;
-            });
-        });
-        var offset = 300;
-        var duration = 800;
-        jQuery(window).scroll(function() {
-            if (jQuery(this).scrollTop() > offset) {
-                jQuery('.back-to-top').fadeIn(duration);
-            } else {
-                jQuery('.back-to-top').fadeOut(duration);
-            }
-        });
-        {% block student_chart %}
-        {% endblock %}
-    </script>
-    <style>
-    .back-to-top {
-        position: fixed;
-        bottom: 2em;
-        right: 0px;
-        text-decoration: none;
-        padding: 1em;
-        display: none;
-    }
-    </style>
     </body>
 </html>
