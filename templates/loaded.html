@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block title %} Google Code-In Leaderboard - Pages Loaded{% endblock %}
+{% block content %}
+
+<header class="codrops-header">
+    <br><i class="fa fa-cogs fa-3x"></i>
+    <h1>Google Code-In Leaderboard<span><small>Pages loaded (times)</small></span></h1>
+</header>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Page</th>
+                <th>Times</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for data in times %}
+        <tr class='clickableRow' href="{{ data[0] }}">
+            <td>{{ data[0] }}</td>
+            <td>{{ data[1] }}</td>
+        </tr>{% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

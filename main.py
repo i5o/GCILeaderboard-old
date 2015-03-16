@@ -19,6 +19,7 @@
 import sys
 import os
 import json
+import operator
 from utils import *
 from flask import Flask
 from flask import render_template
@@ -107,11 +108,9 @@ def leaderboard_org(year, orgname):
 
 @app.route('/times_loaded')
 def loaded():
-    data = open('visits.json', 'r').read()
-    response = make_response(data)
-    response.headers[
-        "Content-Disposition"] = "attachment; filename=times_loaded.json"
-    return response
+    times = json.loads(open("visits.json", "r").read())
+    times = sorted(times.items(), key=operator.itemgetter(1))
+    return render_template("loaded.html", times=times)
 
 
 @app.route(
