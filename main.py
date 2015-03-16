@@ -24,6 +24,7 @@ from flask import Flask
 from flask import render_template
 from flask import redirect
 from flask import request
+from flask import make_response
 
 app = Flask(__name__)
 GCI = GCIUtils()
@@ -104,11 +105,13 @@ def leaderboard_org(year, orgname):
         reloaded=TIMES_RELOADED[request.path])
 
 
-@app.route('/loaded.html')
+@app.route('/times_loaded')
 def loaded():
-    total = open('visits.json', 'r').read()
-    total = total.replace("\n", "<br>")
-    return total
+    data = open('visits.json', 'r').read()
+    response = make_response(data)
+    response.headers[
+        "Content-Disposition"] = "attachment; filename=times_loaded.json"
+    return response
 
 
 @app.route(
