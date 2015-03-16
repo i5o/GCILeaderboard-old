@@ -104,9 +104,11 @@ def leaderboard_org(year, orgname):
         reloaded=TIMES_RELOADED[request.path])
 
 
-@app.route('/loaded.json')
+@app.route('/loaded.html')
 def loaded():
-    return open('visits.json', 'r').read()
+    total = open('visits.json', 'r').read()
+    total = total.replace("\n", "<br>")
+    return total
 
 
 @app.route(
