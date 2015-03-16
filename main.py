@@ -40,7 +40,7 @@ def update_times():
         TIMES_RELOADED[request.path] = 1
     else:
         TIMES_RELOADED[request.path] += 1
-    open("visits.json", "w").write(json.dumps(TIMES_RELOADED))
+    open("visits.json", "w").write(json.dumps(TIMES_RELOADED, indent=4))
 
 
 @app.route('/gci<year>/', defaults={'year': str(CURRENT_CONTEST)})
