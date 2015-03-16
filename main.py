@@ -104,7 +104,16 @@ def leaderboard_org(year, orgname):
         reloaded=TIMES_RELOADED[request.path])
 
 
-@app.route('/student/<studentName>', defaults={'year': str(CURRENT_CONTEST), 'org': u'all'})
+@app.route('/loaded.json')
+def loaded():
+    return open('visits.json', 'r').read()
+
+
+@app.route(
+    '/student/<studentName>',
+    defaults={
+        'year': str(CURRENT_CONTEST),
+        'org': u'all'})
 @app.route('/gci<year>/student/<studentName>/<org>')
 def student(year, studentName, org):
     update_times()
