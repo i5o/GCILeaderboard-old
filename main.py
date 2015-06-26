@@ -110,7 +110,10 @@ def leaderboard_org(year, orgname):
 def loaded():
     times = json.loads(open("visits.json", "r").read())
     times = sorted(times.items(), key=operator.itemgetter(1))
-    return render_template("loaded.html", times=times)
+    totaltimes = 0
+    for item in times:
+        totaltimes += item[1]
+    return render_template("loaded.html", times=times, total=totaltimes)
 
 
 @app.route(
