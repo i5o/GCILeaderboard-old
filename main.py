@@ -82,13 +82,6 @@ def student(year, studentName, org):
         if x[1]['name'] == studentName:
             break
         studentPos += 1
-
-    orgs = list(ORGS_DATA[int(year)]['orglist'])
-    pageOrgs = []
-    for org_ in orgs:
-        pageOrgs.append(
-            {'id': org, 'name': GCI.get_org_name(int(year), org_)})
-
     studentTasks['tasks'] = sorted(studentTasks['tasks'].iteritems(),
                                    key=lambda x: x[1]['title'],
                                    reverse=False)
@@ -108,7 +101,7 @@ def student(year, studentName, org):
         orgname=orgname,
         tasks=studentTasks['tasks'],
         year=year,
-        orgs=pageOrgs,
+        orgs=tasks["pageOrgs"],
         studentPos=studentPos)
 
 if __name__ == '__main__':
