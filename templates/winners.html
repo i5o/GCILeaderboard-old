@@ -1,29 +1,27 @@
 {% extends "index.html" %}
-
 {% block title %} Google Code-In 2014 Winners{% endblock %}
 {% block content %}
-
 <header class="codrops-header">
-    <i class="fa fa-cogs fa-3x"></i>
-    <h1>Google Code-In 2014<span>Winners<br><a href="http://google-opensource.blogspot.com/2014/01/google-code-in-2013-drumroll-please.html"><small>Oficial announce</small></a></span></h1>
+	<i class="fa fa-cogs fa-3x"></i>
+	<h1>Google Code-In 2014<span>Winners<br><a href="http://google-opensource.blogspot.com/2014/01/google-code-in-2013-drumroll-please.html"><small>Oficial announce</small></a></span></h1>
 </header>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Student</th>
-                <th>Organization</th>
-                <th>Rol</th>
-            </tr>
-        </thead>
-        <tbody>
-{% for data in winners %}
-        <tr>
-            <td>{{ data[0] }} </td>
-            <td>{{ data[1] }}</td>
-            <td>{{ data[2] }} </td>
-        </tr>{% endfor %}
-        </tbody>
-    </table>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Student</th>
+			<th>Organization</th>
+			<th>Rol</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for data in winners %}
+		<tr>
+			<td>{{ data[0] }} </td>
+			<td>{{ data[1] }}</td>
+			<td>{{ data[2] }} </td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
 </div>
 {% endblock %}

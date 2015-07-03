@@ -1,124 +1,134 @@
 {% extends "index.html" %}
-
 {% block title %} Leaderboard for {{ orgname }} {% endblock %}
 {% block content %}
-
-<header class="codrops-header"><br>
-    <i class="fa fa-cogs fa-3x">&nbsp;&nbsp;<p style="font-family: 'Lato'; display: inline;">{{year}}</p></i>
-    <h1>{{ orgname }}<span>{{ totalStudents }} students have finished {{ totalTasks }} tasks.<small><p><a href="/times_loaded" id="noColor">This page has been loaded {{ reloaded }} times.</a></p></small></span></h1>
+<header class="codrops-header">
+	<br>
+	<i class="fa fa-cogs fa-3x">
+		&nbsp;&nbsp;
+		<p style="font-family: 'Lato'; display: inline;">{{year}}</p>
+	</i>
+	<h1>
+		{{ orgname }}
+		<span>
+			{{ totalStudents }} students have finished {{ totalTasks }} tasks.
+			<small>
+				<p><a href="/times_loaded" id="noColor">This page has been loaded {{ reloaded }} times.</a></p>
+			</small>
+		</span>
+	</h1>
 </header>
 <div style="margin:0 auto;" id="student-data">
-    <div class="col-lg-2">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-code fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">{{ tags['Code'] }}</div>
-                        <div>Code <br>tagged tasks</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-2">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-laptop fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">{{ tags['User Interface'] }}</div>
-                        <div>User Interface<br>tagged tasks</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-2">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-search fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">{{ tags['Quality Assurance'] }}</div>
-                        <div>Quality Assurance<br>tagged tasks</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-2">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-book fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">{{ tags['Documentation/Training'] }}</div>
-                        <div>Documentation<br>tagged tasks</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-2">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-flag fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">{{ tags['Outreach/Research'] }}</div>
-                        <div>Research<br>tagged tasks</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-2">
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-cogs fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">{{ totalTasks }}</div>
-                        <div>Closed<br>tasks</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="col-lg-2">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-code fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">{{ tags['Code'] }}</div>
+						<div>Code <br>tagged tasks</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-2">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-laptop fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">{{ tags['User Interface'] }}</div>
+						<div>User Interface<br>tagged tasks</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-2">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-search fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">{{ tags['Quality Assurance'] }}</div>
+						<div>Quality Assurance<br>tagged tasks</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-2">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-book fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">{{ tags['Documentation/Training'] }}</div>
+						<div>Documentation<br>tagged tasks</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-2">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-flag fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">{{ tags['Outreach/Research'] }}</div>
+						<div>Research<br>tagged tasks</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-2">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-cogs fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">{{ totalTasks }}</div>
+						<div>Closed<br>tasks</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Student</th>
-                <th>Organization</th>
-                <th>Closed tasks</th>
-                <th>Closed tasks in % (approx.)</th>
-            </tr>
-        </thead>
-        <tbody>
-{% for data in userTasks %}
-        <tr class='clickableRow' href='/gci{{year}}/student/{{data[1]['name']}}/{{org_id}}'>
-            <td>{{ userTasks.index(data) +1 }} </td>
-            <td>{{ data[1]['name'] }}</td>
-            <td>{{ orgname }}</td>
-            <td>{{ data[1]['tasks'] }}</td>
-            <td>{{ ((data[1]['tasks'] * 100) / totalTasks)|round(4)|float }}</td>
-        </tr>{% endfor %}
-        </tbody>
-    </table>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Student</th>
+			<th>Organization</th>
+			<th>Closed tasks</th>
+			<th>Closed tasks in % (approx.)</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for data in userTasks %}
+		<tr class='clickableRow' href='/gci{{year}}/student/{{data[1]['name']}}/{{org_id}}'>
+		<td>{{ userTasks.index(data) +1 }} </td>
+		<td>{{ data[1]['name'] }}</td>
+		<td>{{ orgname }}</td>
+		<td>{{ data[1]['tasks'] }}</td>
+		<td>{{ ((data[1]['tasks'] * 100) / totalTasks)|round(4)|float }}</td>
+		</tr>{% endfor %}
+	</tbody>
+</table>
 </div>
 {% endblock %}
