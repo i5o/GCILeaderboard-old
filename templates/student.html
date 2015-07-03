@@ -12,7 +12,9 @@
 		<span>
 			Profile in {{ orgname }}
 			<small>
-				<p><a href="/times_loaded" id="noColor">This page has been loaded {{ reloaded }} times.</a></p>
+				<p>Position in "{{ orgname }}" leaderboard: {{ studentPos }}.*<br>
+					<small>* This is approximated, this leaderboard, use a mechanism, which is not perfect.</small>
+				</p>
 			</small>
 		</span>
 	</h1>
@@ -102,7 +104,7 @@
 					</div>
 					<div class="col-xs-9 text-right">
 						<div class="huge">{{ tasks|length }}</div>
-						<div>Closed<br>tasks</div>
+						<div>Closed<br>tasks *</div>
 					</div>
 				</div>
 			</div>

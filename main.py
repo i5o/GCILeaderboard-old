@@ -31,32 +31,16 @@ app = Flask(__name__)
 GCI = GCIUtils()
 
 
-@app.route('/*')
-def update_times():
-    global TIMES_RELOADED
-    if not os.path.exists("visits.json"):
-        open("visits.json", "w").write("{}")
-
-    TIMES_RELOADED = json.loads(open("visits.json", "r").read())
-    if not request.path in TIMES_RELOADED:
-        TIMES_RELOADED[request.path] = 1
-    else:
-        TIMES_RELOADED[request.path] += 1
-    open("visits.json", "w").write(json.dumps(TIMES_RELOADED, indent=4))
-
-
 @app.route('/gci<year>/', defaults={'year': str(CURRENT_CONTEST)})
 @app.route('/gci<year>')
 @app.route('/gci<year>/')
 @app.route('/')
 def start_index(year=CURRENT_CONTEST):
-    update_times()
     return redirect('/gci' + str(year) + '/org/all')
 
 
 @app.errorhandler(404)
 def page_not_found(e):
-    update_times()
     return render_template('errors/404.html', reloaded=TIMES_RELOADED)
 
 
@@ -65,55 +49,21 @@ def page_not_found(e):
 @app.route('/gci<year>/org/<orgname>')
 @app.route('/gci<year>/org/<orgname>/')
 def leaderboard_org(year, orgname):
-    update_times()
-    GCI.update_leaderboard(int(year))
-    orgs = list(ORGS_DATA[int(year)]['orglist'])
-    if orgname not in orgs:
-        return page_not_found(404)
-
-    pageOrgs = []
-    for org in orgs:
-        pageOrgs.append(
-            {'id': org, 'name': GCI.get_org_name(int(year), org)})
-
-    if orgname != 'all':
-        totalTasks = len(ORG_TASKS[int(year)][orgname])
-    else:
-        totalTasks = 0
-        for org in ORGS_DATA[int(year)]['orglist']:
-            if org == 'all':
-                continue
-            totalTasks += len(ORG_TASKS[int(year)][org])
-
     org_title = GCI.get_org_name(int(year), orgname)
     tags = GCI.get_tasks_count(int(year), orgname)
-    userTasks = sorted(
-        CONTEST_LEADERBOARD[int(year)][orgname].iteritems(),
-        key=lambda x: x[1]['tasks'],
-        reverse=True)
+    tasks = GCI.get_tasks(int(year), orgname)
 
     return render_template(
         'org.html',
         orgname=org_title,
         tags=tags,
-        totalTasks=totalTasks,
-        userTasks=userTasks,
+        totalTasks=tasks["totalTasks"],
+        userTasks=tasks["userTasks"],
         totalStudents=len(
             CONTEST_LEADERBOARD[int(year)][orgname]),
         org_id=orgname,
-        orgs=pageOrgs,
-        year=year,
-        reloaded=TIMES_RELOADED[request.path])
-
-
-@app.route('/times_loaded')
-def loaded():
-    times = json.loads(open("visits.json", "r").read())
-    times = sorted(times.items(), key=operator.itemgetter(1))
-    totaltimes = 0
-    for item in times:
-        totaltimes += item[1]
-    return render_template("loaded.html", times=times, total=totaltimes)
+        orgs=tasks["pageOrgs"],
+        year=year)
 
 
 @app.route(
@@ -123,9 +73,15 @@ def loaded():
         'org': u'all'})
 @app.route('/gci<year>/student/<studentName>/<org>')
 def student(year, studentName, org):
-    update_times()
     studentTasks = GCI.get_student_tasks(studentName, int(year), org)
     tags = studentTasks['total_tags']
+    tasks = GCI.get_tasks(int(year), org)
+
+    studentPos = 1
+    for x in tasks["userTasks"]:
+        if x[1]['name'] == studentName:
+            break
+        studentPos += 1
 
     orgs = list(ORGS_DATA[int(year)]['orglist'])
     pageOrgs = []
@@ -153,7 +109,7 @@ def student(year, studentName, org):
         tasks=studentTasks['tasks'],
         year=year,
         orgs=pageOrgs,
-        reloaded=TIMES_RELOADED[request.path])
+        studentPos=studentPos)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=int(sys.argv[1]))

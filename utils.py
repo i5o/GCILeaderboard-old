@@ -47,12 +47,14 @@ class GCIUtils():
 
         # Start data. Take a few minutes
         for year in ORGS_DATA.keys():
-            continue
+            """
+            DISABLED FOR TEST
             data = self.get_orglist(year)
             ORGS_DATA[year]['orglist'] = data[0]
             ORGS_DATA[year]['chart_data'] = data[1]
             self.update_orgs_tasks(year)
-
+            """
+            self.update_leaderboard(int(year))
         self.change_process_name()
 
     def change_process_name(self, name='gci-leaderboard'):
@@ -236,3 +238,31 @@ class GCIUtils():
                     except KeyError:
                         continue
         return tags
+
+    def get_tasks(self, year, orgname):
+        orgs = list(ORGS_DATA[int(year)]['orglist'])
+        if orgname not in orgs:
+            return page_not_found(404)
+
+        pageOrgs = []
+        for org in orgs:
+            pageOrgs.append(
+                {'id': org, 'name': self.get_org_name(year, org)})
+
+        if orgname != 'all':
+            totalTasks = len(ORG_TASKS[year][orgname])
+        else:
+            totalTasks = 0
+            for org in ORGS_DATA[year]['orglist']:
+                if org == 'all':
+                    continue
+                totalTasks += len(ORG_TASKS[year][org])
+
+        userTasks = sorted(
+            CONTEST_LEADERBOARD[year][orgname].iteritems(),
+            key=lambda x: x[1]['tasks'],
+            reverse=True)
+        return {
+            "userTasks": userTasks,
+            "totalTasks": totalTasks,
+            "pageOrgs": pageOrgs}
