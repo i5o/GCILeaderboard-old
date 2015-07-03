@@ -19,8 +19,11 @@
 			});
 		</script>
 		<style>
+			tr.clickableRow:nth-of-type(odd){background-color:#bce1fb;color:#1a77b0}
+			tr.clickableRow:nth-of-type(odd):hover{color:white;background-color:#5ebcfc }
+			tr.clickableRow:nth-of-type(even){background-color:#bce1fb;color:#1a77b0}
+			tr.clickableRow:nth-of-type(even):hover{color:white;background-color: #5ebcfc}
 			tr.clickableRow { cursor: pointer; }
-			tr.clickableRow:hover { color: #31708F; /*font-weight: bold;*/}
 			#noColor { color: gray; }
 		</style>
 	</head>
@@ -45,7 +48,7 @@
 			</nav>
 			<div class="st-content">
 				<div class="st-content-inner">
-					<div style="width: 100%;text-transform: uppercase;font-size: 0.69em;font-weight: 400;display: inline-block; position: fixed" id="st-trigger-effects">
+					<div style="width: 100%; text-transform: uppercase;font-size: 0.69em;font-weight: 400;display: inline-block; position: fixed" id="st-trigger-effects">
 						<button data-effect="st-effect-1" type="button" class="btn btn-default fa fa-list fa-2x"></button>
 					</div>
 					{% block content %}
