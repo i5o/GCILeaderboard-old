@@ -9,6 +9,8 @@
     src: url(../fonts/codropsicons/codropsicons.eot?#iefix) format('embedded-opentype'), url(../fonts/codropsicons/codropsicons.woff) format('woff'), url(../fonts/codropsicons/codropsicons.ttf) format('truetype'), url(../fonts/codropsicons/codropsicons.svg#codropsicons) format('svg');
 }
 body {
+    // 1em should = 16px, but in reality 1em < 16px :(
+    font-size: 1.5em;
     background: #444;
     font-weight: 300;
 }
@@ -1596,7 +1598,6 @@ html {
 }
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
     line-height: 1.42857143;
     color: #31708f;
     background-color: #fff;
