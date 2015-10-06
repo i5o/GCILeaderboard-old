@@ -41,7 +41,7 @@ def start_index(year=CURRENT_CONTEST):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('errors/404.html', reloaded=TIMES_RELOADED)
+    return render_template('errors/404.html')
 
 
 @app.route('/org/<orgname>', defaults={'year': str(CURRENT_CONTEST)})
